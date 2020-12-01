@@ -1,0 +1,7 @@
+
+        Function: foo
+            Body:
+                foo1();
+                Return foo(fooo());
+                ** Test comment **
+            EndBody.

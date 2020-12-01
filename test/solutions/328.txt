@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],([][Assign(ArrayCell(Id(a),[IntLiteral(2)]),IntLiteral(5))]))])

@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[VarDecl(Id(x)),VarDecl(Id(y)),VarDecl(Id(z),[1])],([][While(BinaryOp(<,Id(x),BinaryOp(+,Id(y),ArrayCell(Id(z),[IntLiteral(1)]))),[VarDecl(Id(e),IntLiteral(10))],[While(BooleanLiteral(true),[],[While(BooleanLiteral(true),[],[While(BooleanLiteral(true),[],[])])])])]))])

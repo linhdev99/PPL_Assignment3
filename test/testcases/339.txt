@@ -1,0 +1,5 @@
+
+        Function: foo
+            Body:
+                Return a[10][10];
+            EndBody.

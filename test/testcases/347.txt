@@ -1,0 +1,8 @@
+
+        Var: x, y[1] = True, z[2][3] = {{1,2,"text"},{True,False,0xA}};
+        Function: main
+        Parameter: b, c, d[10][10]
+        Body:
+            Var: a = 1710165;
+        EndBody.
+        

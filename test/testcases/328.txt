@@ -1,0 +1,5 @@
+
+        Function: foo
+            Body:
+                a[2] = 5;
+            EndBody.

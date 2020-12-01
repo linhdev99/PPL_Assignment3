@@ -1,0 +1,10 @@
+
+Function: main 
+Body:
+    **
+    *Student Name   : Huynh Pham Phuoc Linh
+    *Student ID     : 1710165
+    **
+    print(value);
+    Return;
+EndBody.

@@ -1,0 +1,6 @@
+
+        Function: foo
+            Body:
+                foo1();
+                Return foo();
+            EndBody.

@@ -1,0 +1,15 @@
+
+        Function: foo
+        Parameter: x, y, z[1]
+            Body:
+                While (x < y + z[1]) Do
+                    ** Test 5 While Statement **
+                    Var: e = 0xA;
+                    While True Do
+                        While True Do
+                            While True Do
+                            EndWhile.
+                        EndWhile.
+                    EndWhile.
+                EndWhile.
+            EndBody.

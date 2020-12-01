@@ -1,0 +1,8 @@
+
+        Function: foo
+        Parameter: x, y, z[1]
+            Body:
+                While (True) Do
+                    ** Test 1 While Statement **
+                EndWhile.
+            EndBody.

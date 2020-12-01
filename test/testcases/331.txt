@@ -1,0 +1,7 @@
+
+        Function: foo
+            Body:
+                If x != y Then
+                    x = x+2*y-(3-4)\foo(x+1);
+                EndIf.
+            EndBody.

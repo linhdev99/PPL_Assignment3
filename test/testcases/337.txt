@@ -1,0 +1,4 @@
+Function: main 
+Body:
+    a[1][2][3] = x[1][a][foo()];
+EndBody.

@@ -1,0 +1,13 @@
+
+        Function: foo
+        Parameter: x, y, z[1]
+            Body:
+                ** Test 5 For Statement **
+                For (x = 0, x < 5, 2) Do
+                    Var: abc[2] = {0x1, 0x2};
+                    abc = {0,2,3}[1];
+                    ** Comment 4 **
+                    For (i = 0, i, i) Do
+                    EndFor.
+                EndFor.
+            EndBody.

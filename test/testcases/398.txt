@@ -1,0 +1,23 @@
+
+        Function: foo
+        Parameter: x, y, z[1]
+            Body:
+                Do
+                    ** Test 4 Dowhile Statement **
+                    Do
+                        Do
+                            Do
+                                While True Do
+                                    While True Do
+                                        If True Then
+                                        Else
+                                            For(i = 0,i < 10, 1) Do
+                                            EndFor.
+                                        EndIf.
+                                    EndWhile.
+                                EndWhile.
+                            While True EndDo.
+                        While True EndDo.
+                    While True EndDo.
+                While True EndDo.
+            EndBody.

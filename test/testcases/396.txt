@@ -1,0 +1,18 @@
+
+        Function: foo
+        Parameter: x, y, z[1]
+            Body:
+                Do
+                    ** Test 4 Dowhile Statement **
+                    Do
+                        Do
+                            Do
+                                While True Do
+                                    While True Do
+                                    EndWhile.
+                                EndWhile.
+                            While True EndDo.
+                        While True EndDo.
+                    While True EndDo.
+                While True EndDo.
+            EndBody.

@@ -1,0 +1,12 @@
+
+        Function: foo
+            Body:
+                Var: x = "1710165";
+                If x == "1710165" Then
+                    Return id(x);
+                ElseIf x == "1710166" Then
+                    x = "1710165";
+                Else
+                    Continue;
+                EndIf.
+            EndBody.

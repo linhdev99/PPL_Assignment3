@@ -58,11 +58,11 @@ def test(suite):
     print('Test output\n', stream.read())
 
 def printUsage():
-    print("python3 run.py gen")
-    print("python3 run.py test LexerSuite")
-    print("python3 run.py test ParserSuite")
-    print("python3 run.py test ASTGenSuite")
-    print("python3 run.py test CheckSuite")
+    print("python run.py gen")
+    print("python run.py test LexerSuite")
+    print("python run.py test ParserSuite")
+    print("python run.py test ASTGenSuite")
+    print("python run.py test CheckSuite")
 
 if __name__ == "__main__":
    main(sys.argv[1:])

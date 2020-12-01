@@ -1,0 +1,6 @@
+
+        Function: foo
+            Body:
+                a[i][1] = a[3][4] + 5 \ (2 * 3) -  a[6][b[1]];
+                Return a[4][2];
+            EndBody.

@@ -1,0 +1,16 @@
+
+        Var: x, y[1] = True, z[2][3] = {{1,2,"text"},{True,False,0xA}};
+        Function: main
+        Parameter: b, c, d[10][10]
+        Body:
+            Var: a = 1710165;
+            Var: r = 3.1415;
+            b = -(a + r) * -c;
+            d[1][1] = !(y[1] && z[1][0]);
+            If d[1][1] Then
+                d[1][2] = {1,2,3}; 
+            ElseIf y[1] Then
+                Return !y[1];
+            EndIf.
+        EndBody.
+        

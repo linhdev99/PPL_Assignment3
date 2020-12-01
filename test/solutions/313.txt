@@ -1,0 +1,1 @@
+Program([VarDecl(Id(x),IntLiteral(3)),VarDecl(Id(y),IntLiteral(3))])

@@ -1,0 +1,12 @@
+
+        Function: foo
+        Parameter: x, y, z[1]
+            Body:
+                Do
+                    ** Test 2 Dowhile Statement **
+                    Do
+                        Do
+                        While True EndDo.
+                    While True EndDo.
+                While True EndDo.
+            EndBody.

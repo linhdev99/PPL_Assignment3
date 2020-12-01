@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[VarDecl(Id(x)),VarDecl(Id(y)),VarDecl(Id(z),[1])],([][Dowhile([],[Dowhile([],[],BooleanLiteral(true))],BooleanLiteral(true))]))])

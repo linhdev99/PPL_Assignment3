@@ -1,0 +1,8 @@
+
+        Function: foo
+        Parameter: x, y, z[1]
+            Body:
+                ** Test 1 For Statement **
+                For (x = 0, x < 5, 2) Do
+                EndFor.
+            EndBody.
