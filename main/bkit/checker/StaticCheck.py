@@ -66,6 +66,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return self.visit(self.ast, self.global_envi)
 
     def visitProgram(self, ast, param):
+        self.func_unused = []
+        self.func_call_func = None
         #[self.visit(x,c) for x in ast.decl]
         #Check main in funcDecl exist or not
         is_main_func_defined = False
@@ -79,12 +81,38 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         #Check redeclare
         for x in ast.decl:
             if isinstance(x, VarDecl):
-                print(x)
                 param.append(self.visit(x, param))
+
+            elif isinstance(x, FuncDecl):
+                func = Symbol(
+                    x.name.name,
+                    MType([x.varInit for x in x.param],Unknown())
+                )
+                for i in param:
+                    if i.name == func.name:
+                        raise Redeclared(Function(), func.name)
+                param.append(func)
+                if func.name != 'main':
+                    self.func_unused.append(func)
+        
+        #visit funcdeclare
+        for x in ast.decl:
+            if isinstance(x, FuncDecl):
+                self.func_call_func = x.name.name
+                self.visit(x, param)
+
+        print(self.func_unused)
+        if self.func_unused:
+            raise UnreachableFunction(self.func_unused[0].name)
+        #for x in param: #check param
+        #    print(x)
     
     def visitVarDecl(self, ast, param):
-        print("test ... *******************")
-        return None
+        for x in param:
+            if ast.variable.name == x.name:
+                raise Redeclared(Variable(), ast.variable.name)
+        varType = self.visit(ast.varInit, ast.varDimen)
+        return Symbol(ast.variable.name, MType(None, varType))
     
     def visitFuncDecl(self, ast, param):
         return None
@@ -132,16 +160,17 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return None
     
     def visitIntLiteral(self, ast, param):
-        return None
+        return IntType()
     
     def visitFloatLiteral(self, ast, param):
-        return None
+        return FloatType()
     
     def visitBooleanLiteral(self, ast, param):
-        return None
+        return BoolType()
     
     def visitStringLiteral(self, ast, param):
-        return None
+        return StringType()
 
     def visitArrayLiteral(self, ast, param):
-        return None
+        eleType = ast.value[0]
+        return ArrayType(param, eleType)

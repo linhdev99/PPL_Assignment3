@@ -17,14 +17,20 @@ class CheckSuite(unittest.TestCase):
         """Simple program: main"""
         input = """
 Var: x = 1;
+Var: y[2] = {1,2};
 Function: main
 Body: 
     foo();
 EndBody.
-Function: test
+Function: foo
+Parameter: a, b
+Body:
+EndBody.
+Function: foo
+Parameter: a, b
 Body:
 EndBody."""
-        expect = str(Undeclared(Function(),"foo"))
+        expect = str(Redeclared(Function(),"foo"))
         self.assertTrue(TestChecker.test(input,expect,400))
 
     # def test_0(self):

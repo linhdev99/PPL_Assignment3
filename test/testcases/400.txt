@@ -1,9 +1,15 @@
 
 Var: x = 1;
+Var: y[2] = {1,2};
 Function: main
 Body: 
     foo();
 EndBody.
-Function: test
+Function: foo
+Parameter: a, b
+Body:
+EndBody.
+Function: foo
+Parameter: a, b
 Body:
 EndBody.
