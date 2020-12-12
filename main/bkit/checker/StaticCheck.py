@@ -82,9 +82,13 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             if isinstance(x, VarDecl):
                 param.append(self.visit(x, param))
             elif isinstance(x, FuncDecl):
+                lstParameter = []
+                for y in x.param:
+                    temp = self.visit(y, param)
+                    lstParameter.append(temp.mtype.restype)                    
                 func = Symbol(
                     x.name.name,
-                    MType([x.varInit for x in x.param],VoidType())
+                    MType(lstParameter,VoidType())
                 )
                 for i in param:
                     if i.name == func.name:
@@ -109,13 +113,13 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             varType = self.visit(ast.varInit, ast.varDimen)
         else:
             varType = Unknown()
-        return Symbol(ast.variable.name, MType(None, varType))
+        return Symbol(ast.variable.name, MType([], varType))
     
     def visitFuncDecl(self, ast, param):
         local_envi = []
         para_list = []
         is_return = False
-        return_type = None
+        return_type = []
         nameFunc = ast.name.name;
         for x in ast.param:
             if x.variable.name in para_list:
@@ -169,7 +173,23 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         
     
     def visitUnaryOp(self, ast, param):
-        print(ast)
+        op = ast.op
+        expr = self.visit(ast.body, param)
+        if ast.op == '!':
+            if isinstance(expr, BoolType):
+                return expr
+            else:
+                raise TypeMismatchInExpression(ast)
+        elif ast.op == '-':
+            if isinstance(expr, IntType):
+                return expr
+            else:
+                raise TypeMismatchInExpression(ast)
+        elif ast.op == '-.':
+            if isinstance(expr, FloatType):
+                return expr
+            else:
+                raise TypeMismatchInExpression(ast)
     
     def visitCallExpr(self, ast, param):
         return None
@@ -246,5 +266,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return StringType()
 
     def visitArrayLiteral(self, ast, param):
-        eleType = ast.value[0]
+        eleType = []
+        for x in ast.value:
+            temp = self.visit(x, param)
+            eleType.append(temp)    
         return ArrayType(param, eleType)
