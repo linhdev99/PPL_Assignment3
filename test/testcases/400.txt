@@ -1,5 +1,5 @@
 
-Var: x = 1;
+Var: x;
 Var: y[2] = {1,2};
 Function: main
 Body: 
@@ -8,8 +8,5 @@ EndBody.
 Function: foo
 Parameter: a, b
 Body:
-EndBody.
-Function: foo
-Parameter: a, b
-Body:
+    Var: c = 1;
 EndBody.

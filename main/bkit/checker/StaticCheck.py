@@ -66,7 +66,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return self.visit(self.ast, self.global_envi)
 
     def visitProgram(self, ast, param):
-        self.func_unused = []
         self.func_call_func = None
         #[self.visit(x,c) for x in ast.decl]
         #Check main in funcDecl exist or not
@@ -82,7 +81,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         for x in ast.decl:
             if isinstance(x, VarDecl):
                 param.append(self.visit(x, param))
-
             elif isinstance(x, FuncDecl):
                 func = Symbol(
                     x.name.name,
@@ -92,30 +90,40 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                     if i.name == func.name:
                         raise Redeclared(Function(), func.name)
                 param.append(func)
-                if func.name != 'main':
-                    self.func_unused.append(func)
-        
+            
         #visit funcdeclare
         for x in ast.decl:
             if isinstance(x, FuncDecl):
                 self.func_call_func = x.name.name
-                self.visit(x, param)
-
-        print(self.func_unused)
-        if self.func_unused:
-            raise UnreachableFunction(self.func_unused[0].name)
-        #for x in param: #check param
-        #    print(x)
-    
+                self.visit(x, param)    
+            
+        # for x in param: #print param
+        #     print(x)
+        # print("===========================")
+        
     def visitVarDecl(self, ast, param):
         for x in param:
             if ast.variable.name == x.name:
                 raise Redeclared(Variable(), ast.variable.name)
-        varType = self.visit(ast.varInit, ast.varDimen)
+        if ast.varInit:
+            varType = self.visit(ast.varInit, ast.varDimen)
+        else:
+            varType = Unknown()
         return Symbol(ast.variable.name, MType(None, varType))
     
     def visitFuncDecl(self, ast, param):
-        return None
+        local_envi = []
+        para_list = []
+        is_return = False
+        nameFunc = ast.name.name;
+        for x in ast.param:
+            if x.variable.name in para_list:
+                raise Redeclared(Parameter(), x.variable.name)
+            else:
+                para_list.append(x.variable.name)
+                temp = self.visit(x, local_envi)
+                local_envi.append(temp)
+            
     
     def visitBinaryOp(self, ast, param):
         return None
