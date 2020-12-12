@@ -1,12 +1,3 @@
-
-Var: x;
-Var: y[2] = {1,2};
-Function: main
-Body: 
-    foo();
-EndBody.
-Function: foo
-Parameter: a, b
-Body:
-    Var: c = 1;
-EndBody.
+Function: test
+                   Body:
+                   EndBody.

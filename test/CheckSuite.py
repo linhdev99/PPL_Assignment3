@@ -16,19 +16,26 @@ class CheckSuite(unittest.TestCase):
     def test_1(self):
         """Simple program: main"""
         input = """
-Var: x;
+Var: x, z, f = True;
 Var: y[2] = {1,2};
+Var: c = 5.2;
 Function: main
 Body: 
+    x = c;
+    z = x +. 1.4 +. 1.5 -. 3.2 \. 2.2e3 +. x;
+    f = x == c;
     foo();
 EndBody.
 Function: foo
 Parameter: a, b
 Body:
     Var: c = 1;
+    Var: d = True;
+    x = c;
+    Return x;
 EndBody."""
         expect = str(TypeMismatchInStatement(CallStmt(Id("printStrLn"),[])))
-        self.assertTrue(TestChecker.test(input,expect,400))
+        self.assertTrue(TestChecker.test(input,expect,401))
 
     # def test_0(self):
     #     """Simple program: main"""

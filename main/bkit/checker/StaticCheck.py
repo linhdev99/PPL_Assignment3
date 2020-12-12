@@ -84,7 +84,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             elif isinstance(x, FuncDecl):
                 func = Symbol(
                     x.name.name,
-                    MType([x.varInit for x in x.param],Unknown())
+                    MType([x.varInit for x in x.param],VoidType())
                 )
                 for i in param:
                     if i.name == func.name:
@@ -115,6 +115,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         local_envi = []
         para_list = []
         is_return = False
+        return_type = None
         nameFunc = ast.name.name;
         for x in ast.param:
             if x.variable.name in para_list:
@@ -123,25 +124,90 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 para_list.append(x.variable.name)
                 temp = self.visit(x, local_envi)
                 local_envi.append(temp)
+        for vardecl in ast.body[0]:
+            temp = self.visit(vardecl, local_envi)
+            local_envi.append(temp)
+        for stmt in ast.body[1]:
+            if isinstance(stmt, Return):
+                if self.visit(stmt, (local_envi + param, return_type)):
+                    is_return = True
+            else:
+                self.visit(stmt, local_envi + param)
+        for x in param:
+            print(x)
+            
+        if not is_return and not isinstance(return_type, VoidType):
+            raise FunctionNotReturn(ast.name.name)
             
     
     def visitBinaryOp(self, ast, param):
-        return None
+        op = ast.op
+        left = ast.left
+        right = ast.right
+        typeLeft = self.visit(left, param)
+        typeRight= self.visit(right, param)
+        def check_type(accept_type, return_type=None):
+            if not isinstance(typeLeft,accept_type) or not isinstance(typeRight,accept_type):
+                raise TypeMismatchInExpression(ast)
+            if return_type:
+                return return_type
+        
+        if op in ['+', '-', '*', '\\']:
+            return check_type(IntType, IntType())
+        if op in ['+.', '-.', '*.', '\\.']:
+            return check_type(FloatType, FloatType())
+        if op in ['%']:
+            return check_type(IntType, IntType())
+        if op in ['<', '<=', '>', '>=','!=']:
+            return check_type(IntType, BoolType())
+        if op in ['&&', '||']:
+            return check_type(BoolType, BoolType())
+        if op in ['<.', '<=.', '>.', '>=.','=/=']:
+            return check_type(FloatType, BoolType())
+        if op in ['==']:
+            return check_type((IntType, FloatType), BoolType())
+        
     
     def visitUnaryOp(self, ast, param):
-        return None
+        print(ast)
     
     def visitCallExpr(self, ast, param):
         return None
     
     def visitId(self, ast, param):
-        return None
+        is_declare = False
+        for x in param:
+            if ast.name == x.name:
+                is_declare = True;
+                break
+        if not is_declare:
+            raise Undeclared(Identifier(), ast.name)
+        for x in param:
+            if ast.name == x.name:
+                return x.mtype.restype
+        
     
     def visitArrayCell(self, ast, param):
-        return None
+        print(ast.idx)
     
     def visitAssign(self, ast, param):
-        return None
+        lhs = ast.lhs
+        rhs = ast.rhs
+        lhsType = self.visit(lhs, param)
+        rhsType = self.visit(rhs, param)
+        if isinstance(lhsType, VoidType):
+            raise TypeMismatchInExpression(ast)
+        elif isinstance(lhsType, Unknown):
+            for idx, x in enumerate(param):
+                if lhs.name == x.name:
+                    param[idx].mtype.restype = rhsType
+        elif not isinstance(lhsType, type(rhsType)):
+            raise TypeMismatchInExpression(ast)
+        else:
+            for idx, x in enumerate(param):
+               if lhs.name == x.name:
+                    param[idx].mtype.restype = rhsType
+        
     
     def visitIf(self, ast, param):
         return None
@@ -156,7 +222,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return None
     
     def visitReturn(self, ast, param):
-        return None
+        print(param)
     
     def visitDowhile(self, ast, param):
         return None

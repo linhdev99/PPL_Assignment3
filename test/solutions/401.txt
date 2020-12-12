@@ -1,1 +1,1 @@
-No Entry Point
+Function Not Return: main
