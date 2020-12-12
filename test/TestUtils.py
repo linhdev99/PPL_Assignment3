@@ -41,7 +41,7 @@ class TestLexer:
             dest.close() 
         dest = open("./test/solutions/" + str(num) + ".txt","r")
         line = dest.read()
-        return line == expect
+        return line == str(expect)
 
     @staticmethod    
     def printLexeme(dest,lexer):
@@ -89,7 +89,7 @@ class TestParser:
             dest.close()
         dest = open("./test/solutions/" + str(num) + ".txt","r")
         line = dest.read()
-        return line == expect
+        return line == str(expect)
 
 class TestAST:
     @staticmethod
@@ -105,7 +105,7 @@ class TestAST:
         dest.close()
         dest = open("./test/solutions/" + str(num) + ".txt","r")
         line = dest.read()
-        return line == expect
+        return line == str(expect)
     @staticmethod
     def test(inputdir,outputdir,num):
         #print("inutdir = "+inputdir)

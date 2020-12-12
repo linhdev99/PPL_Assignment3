@@ -1,0 +1,61 @@
+Var: x1, x2, x3, y[3];
+Function: main
+Body:
+    x1 = 2131;
+    x2 = 0X123ABF;
+    x3 = 0O12323;
+    y[3] = {0.2,0.1e4,-23.43};
+EndBody.
+** Test comment o giua **
+** Test comment o giua **
+** Test comment o giua **
+Function: increase
+Parameter: x
+Body:
+    Return x+1;
+EndBody.
+**
+* Test comment o giua *
+* Test comment o giua *
+* Test comment o giua *
+**
+Function: square
+Parameter: x
+Body:
+    Return x*x;
+EndBody.
+Function: pow
+Parameter: x, y
+Body:
+    Var: result = 1;
+    For (i = 0, i < y, 1) Do ** Test o day **
+        result = result * x;
+        ** khong co gi **
+    EndFor.
+    **
+        * Test comment o giua *
+        * Test comment o giua *
+        * Test comment o giua *
+    **
+    Return result;
+EndBody.
+Function: main
+Body:
+    Var: x;
+    x = increase(5);
+    x = square(x);
+    **
+        * Test comment o giua *
+        * Test comment o giua *
+        * Test comment o giua *
+    **
+    x = pow(x, 5);
+    print("Result = ");
+    print(x);
+    If x < y Then
+        x = 5.4;
+    Else
+        y = 5.e-5;
+    EndIf.
+    Return;
+EndBody.

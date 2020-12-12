@@ -1,0 +1,17 @@
+Function: main
+Body:
+    str = **cai nay khong phai string** "Value \n"
+    num = **cai nay khongo phai num** 10E-5;
+    value = foo(str, num, string_to_float(str) + num **Test Parser thoi**, **Test cho nay** str + float_to_string(num));
+    If num > 100. Then
+        **True: num > 100 ???**
+    ElseIf num > 35 Then
+        **???$$#!@$)#(!)@(*#(!)@*)%#*$@#$489878934234-*4234(*&(*&#%*%!@^#^!@#^@#**
+    Else
+        val = "\n\b\t\f\\" **adasd???**;
+        **
+        * line 1 *
+        * line 2 *
+        **
+    EndIf.
+EndBody.

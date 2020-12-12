@@ -1,0 +1,9 @@
+Var: a[1] = {{1,2,3},{1,1e2}};
+Var: a = 5;
+Function: main
+Body:
+    If True Then
+    EndIf.
+EndBody.
+Body:
+EndBody.

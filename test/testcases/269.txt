@@ -1,0 +1,1 @@
+For (i = 0, i < 10, 1) Do EndFor.

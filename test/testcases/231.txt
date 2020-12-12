@@ -1,0 +1,29 @@
+Function: increase
+Parameter: x
+Body:
+    Return x+1;
+EndBody.
+Function: square
+Parameter: x
+Body:
+    Return x*x;
+EndBody.
+Function: pow
+Parameter: x, y
+Body:
+    Var: result = 1;
+    For (i = 0, i < y, 1) Do
+        result = result * x;
+    EndFor.
+    Return result;
+EndBody.
+Function: main
+Body:
+    Var: x;
+    x = increase(5);
+    x = square(x);
+    x = pow(x, 5);
+    print("Result = ");
+    print(x);
+    Return;
+EndBody.

@@ -1,0 +1,23 @@
+Var: a[10],b,c,x,y,z,sID,sName;
+Function: main
+    Body:
+        a[3 + foo(2)] = a[b[2][3]] + 4;
+        If bool_of_string ("True") Then
+            a = int_of_string (read ());
+            b = float_of_int (a) +. 2.0;
+            While a > b Do
+                For (i = 0, i < z+y, 1) Do
+                    a[5] = {1,2,3,4,5};
+                    str = "Hello, I'"m Linh";
+                    f = 0xABCFF; f1 = 0o1234567;
+                    Do
+                        something();
+                    While bool_of_string("HIHI") EndDo.
+                EndFor.
+            EndWhile.
+        Else
+            a = x * y;
+            b = x + y;
+            z = pow(a,b);
+        EndIf.
+    EndBody.

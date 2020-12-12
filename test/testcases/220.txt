@@ -1,0 +1,9 @@
+Var: x, y, z[3], f[3][4], a, b;
+    Function: main
+    Body:
+        Var: c = False;
+        a = True;
+        b = a && (c || False);
+        x = !(y && z[1]);
+        f[1][1] = !x || !(y && z[a&&b]);
+    EndBody.

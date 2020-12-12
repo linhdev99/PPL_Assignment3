@@ -2,8 +2,6 @@ import unittest
 from TestUtils import TestAST
 from AST import *
 
-from main.bkit.utils.AST import ArrayCell, ArrayLiteral, BinaryOp, BooleanLiteral, CallStmt, Dowhile, Id, IntLiteral, StringLiteral, VarDecl
-
 class ASTGenSuite(unittest.TestCase):
     def test_0(self):
         input = r"""Var:x;"""

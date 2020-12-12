@@ -1,0 +1,27 @@
+Var: x;
+Function: main
+    Body:
+        For (i = 0, i < 20, 1) Do
+            If i % 2 == 0 Then
+                print(fact(i));
+            Else
+                print("i % 2 != 0\n");
+            EndIf.
+            Var: i = 0;
+            While i < 10 Do
+                For (i = 0, i < 20, 1) Do
+                    If i > 10 Then
+                        val = fact(i * 2);
+                        print(int_to_string(val) + "\n");
+                    ElseIf (i > 5) && (i <= 10) Then
+                        sName = "Phuoc Linh";
+                        Continue;
+                        sID = 1710165;
+                    Else
+                        val = fact(i);
+                        print(int_to_string(val) + "\n");
+                    EndIf.
+                EndFor.
+            EndWhile.
+        EndFor.
+    EndBody.

@@ -1,0 +1,6 @@
+Function: main
+Body:
+    str = **cai nay khong phai string** "Value \n";
+    num = **cai nay khongo phai num** 10E-5;
+    value = foo(str, num, string_to_float(str) + num **Test Parser thoi**, **Test cho nay** str + float_to_string(num));
+EndBody.

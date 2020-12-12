@@ -1,0 +1,12 @@
+Var: a[1] = {{1,2,3},{1,1e2}};
+Var: a = 1;
+Function: main
+Body:
+    If True Then
+    EndIf.
+EndBody.
+Function: foo
+Parameter: x[1], a[5][5][1]
+If True Then EndIf.
+Body:
+EndBody.

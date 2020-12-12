@@ -1,4 +1,3 @@
-Function: main  
+Function: test
                    Body:
-                        printStrLn();
-                    EndBody.
+                   EndBody.

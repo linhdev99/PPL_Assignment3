@@ -1,6 +1,7 @@
 
 """
- * @author nhphung
+ * Huynh Pham Phuoc Linh
+ * 1710165
 """
 from abc import ABC, abstractmethod, ABCMeta
 from dataclasses import dataclass
@@ -62,13 +63,85 @@ Symbol("printStr",MType([StringType()],VoidType())),
 Symbol("printStrLn",MType([StringType()],VoidType()))]                           
    
     def check(self):
-        return self.visit(self.ast,self.global_envi)
+        return self.visit(self.ast, self.global_envi)
 
-    def visitProgram(self,ast, c):
-        [self.visit(x,c) for x in ast.decl]
-
-
-
-
-
+    def visitProgram(self, ast, param):
+        #[self.visit(x,c) for x in ast.decl]
+        #Check main in funcDecl exist or not
+        is_main_func_defined = False
+        for x in ast.decl:
+            if isinstance(x, FuncDecl) and x.name.name == 'main':
+                is_main_func_defined = True
+                break
+        if not is_main_func_defined:
+            raise NoEntryPoint()
         
+        #Check redeclare
+        for x in ast.decl:
+            if isinstance(x, VarDecl):
+                print(x)
+                param.append(self.visit(x, param))
+    
+    def visitVarDecl(self, ast, param):
+        print("test ... *******************")
+        return None
+    
+    def visitFuncDecl(self, ast, param):
+        return None
+    
+    def visitBinaryOp(self, ast, param):
+        return None
+    
+    def visitUnaryOp(self, ast, param):
+        return None
+    
+    def visitCallExpr(self, ast, param):
+        return None
+    
+    def visitId(self, ast, param):
+        return None
+    
+    def visitArrayCell(self, ast, param):
+        return None
+    
+    def visitAssign(self, ast, param):
+        return None
+    
+    def visitIf(self, ast, param):
+        return None
+    
+    def visitFor(self, ast, param):
+        return None
+    
+    def visitContinue(self, ast, param):
+        return None
+    
+    def visitBreak(self, ast, param):
+        return None
+    
+    def visitReturn(self, ast, param):
+        return None
+    
+    def visitDowhile(self, ast, param):
+        return None
+
+    def visitWhile(self, ast, param):
+        return None
+
+    def visitCallStmt(self, ast, param):
+        return None
+    
+    def visitIntLiteral(self, ast, param):
+        return None
+    
+    def visitFloatLiteral(self, ast, param):
+        return None
+    
+    def visitBooleanLiteral(self, ast, param):
+        return None
+    
+    def visitStringLiteral(self, ast, param):
+        return None
+
+    def visitArrayLiteral(self, ast, param):
+        return None

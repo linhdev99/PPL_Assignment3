@@ -1,4 +1,9 @@
+
+Var: x = 1;
 Function: main
-                   Body: 
-                        foo();
-                   EndBody.
+Body: 
+    foo();
+EndBody.
+Function: test
+Body:
+EndBody.

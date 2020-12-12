@@ -25,8 +25,3 @@ class LexerSuite(unittest.TestCase):
         """test normal string with escape"""
         self.assertTrue(TestLexer.checkLexeme(""" "ab'"c\\n def"  ""","""ab'"c\\n def,<EOF>""",107))
 
-    def test_wrong_string_with_quote(self):
-        """test wrong string with quote"""
-        self.assertTrue(TestLexer.checkLexeme(""" "ab"cdef"  ""","""ab,cdef,Unclosed String:   """,108))
-    
-    
