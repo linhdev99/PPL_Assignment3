@@ -84,7 +84,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             elif isinstance(x, FuncDecl):
                 lstParameter = []
                 for y in x.param:
-                    temp = self.visit(y, param)
+                    temp = self.visit(y, lstParameter)
                     lstParameter.append(temp.mtype.restype)                    
                 func = Symbol(
                     x.name.name,
@@ -137,11 +137,11 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                     is_return = True
             else:
                 self.visit(stmt, local_envi + param)
-        for x in param:
-            print(x)
+        # for x in param:
+        #     print(x)
             
-        if not is_return and not isinstance(return_type, VoidType):
-            raise FunctionNotReturn(ast.name.name)
+        # if not is_return and not isinstance(return_type, VoidType):
+        #     raise FunctionNotReturn(ast.name.name)
             
     
     def visitBinaryOp(self, ast, param):
@@ -251,7 +251,9 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return None
 
     def visitCallStmt(self, ast, param):
-        return None
+        check_id = self.visit(ast.method, param)
+        for x in ast.param:
+            check_exp = self.visit(x, param)
     
     def visitIntLiteral(self, ast, param):
         return IntType()

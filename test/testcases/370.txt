@@ -1,9 +1,0 @@
-
-        Function: foo
-        Parameter: x, y, z[1]
-            Body:
-                ** Test If statement **
-                Var: x = True, y = False;
-                If True Then
-                EndIf.
-            EndBody.

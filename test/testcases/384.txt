@@ -1,8 +1,0 @@
-
-        Function: foo
-        Parameter: x, y, z[1]
-            Body:
-                While (x < y + z[1]) Do
-                    ** Test 2 While Statement **
-                EndWhile.
-            EndBody.

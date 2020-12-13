@@ -1,7 +1,0 @@
-Var:x;
-Function: foo
-Parameter: x, y[5][2]
-Body:
-    Var: r = 3.14, e = 2.7e1;
-    a = x;
-EndBody.

@@ -1,1 +1,0 @@
-Program([FuncDecl(Id(testWhile)[],([][While(BinaryOp(>,Id(i),IntLiteral(10)),[],[])]))])

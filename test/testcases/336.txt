@@ -1,9 +1,0 @@
-
-        Function: testDowhile
-            Body:
-                Do
-                    i = i * 2;
-                    Break;
-                While (i < 10)
-                EndDo.
-            EndBody.

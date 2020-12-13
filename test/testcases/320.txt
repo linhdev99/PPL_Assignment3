@@ -1,4 +1,0 @@
-Function: foo
-Parameter: x
-Body:
-EndBody.

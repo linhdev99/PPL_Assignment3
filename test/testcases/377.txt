@@ -1,9 +1,0 @@
-
-        Function: foo
-        Parameter: x, y, z[1]
-            Body:
-                ** Test 2 For Statement **
-                For (x = 0, x < 5, 2) Do
-                    Var: abc[2] = {0x1, 0x2};
-                EndFor.
-            EndBody.

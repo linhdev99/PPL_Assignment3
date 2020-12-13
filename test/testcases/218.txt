@@ -1,6 +1,0 @@
-Var: x, y, z[3], f[3][4];
-    Function: main
-    Body:
-        x = !(y && z[1]);
-        f[1][1] = !(x || y) && z[1];
-    EndBody.

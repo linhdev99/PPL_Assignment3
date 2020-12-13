@@ -1,1 +1,0 @@
-Program([FuncDecl(Id(foo)[],([VarDecl(Id(x),StringLiteral(1710165))][If(BinaryOp(==,Id(x),StringLiteral(1710165)),[],[Return(CallExpr(Id(id),[Id(x)]))])ElseIf(BinaryOp(==,Id(x),StringLiteral(1710166)),[],[Assign(Id(x),StringLiteral(1710165))])Else([],[Continue()])]))])

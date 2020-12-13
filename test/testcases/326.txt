@@ -1,5 +1,0 @@
-
-        Function: foo
-            Body:
-                a = foo();
-            EndBody.

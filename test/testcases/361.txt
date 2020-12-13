@@ -1,5 +1,0 @@
-
-        Function: foo
-            Body:
-                a[2][foo()][b[1]] = 5;
-            EndBody.

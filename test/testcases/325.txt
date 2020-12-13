@@ -1,6 +1,0 @@
-
-        Function: foo
-            Body:
-                Break;
-                Continue;
-            EndBody.

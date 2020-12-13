@@ -1,7 +1,0 @@
-
-        Function: foo
-            Body:
-                foo1({1,2,3}[3]);
-                Return foo(fooo({1,2,3}));
-                ** Test comment **
-            EndBody.

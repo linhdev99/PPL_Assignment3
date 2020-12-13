@@ -1,1 +1,1 @@
-Function Not Return: main
+Undeclared Identifier: foo1

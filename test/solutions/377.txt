@@ -1,1 +1,0 @@
-Program([FuncDecl(Id(foo)[VarDecl(Id(x)),VarDecl(Id(y)),VarDecl(Id(z),[1])],([][For(Id(x),IntLiteral(0),BinaryOp(<,Id(x),IntLiteral(5)),IntLiteral(2),[VarDecl(Id(abc),[2],ArrayLiteral(IntLiteral(1),IntLiteral(2)))],[])]))])

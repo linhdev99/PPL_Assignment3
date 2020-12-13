@@ -1,1 +1,0 @@
-Program([VarDecl(Id(x),[1,2,3]),VarDecl(Id(y),[3],ArrayLiteral(IntLiteral(1),IntLiteral(2),ArrayLiteral(IntLiteral(1),IntLiteral(2),IntLiteral(3))))])

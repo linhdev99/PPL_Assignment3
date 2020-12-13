@@ -1,3 +1,0 @@
-Var: x, a;
-Var: y = 1, b;
-Var: z[5], c = 1;

@@ -1,5 +1,0 @@
-
-        Function: foo
-            Body:
-                Return foo(x+2);
-            EndBody.

@@ -1,1 +1,0 @@
-Program([FuncDecl(Id(foo)[],([][Assign(Id(a),CallExpr(Id(foo),[]))]))])

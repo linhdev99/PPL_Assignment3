@@ -1,1 +1,0 @@
-Program([FuncDecl(Id(testDowhile)[],([][Dowhile([],[Assign(Id(i),BinaryOp(*,Id(i),IntLiteral(2))),Break()],BinaryOp(<,Id(i),IntLiteral(10)))]))])
