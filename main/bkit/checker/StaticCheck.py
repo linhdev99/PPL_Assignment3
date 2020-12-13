@@ -137,8 +137,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                     is_return = True
             else:
                 self.visit(stmt, local_envi + param)
-        # for x in param:
-        #     print(x)
+        for x in param:
+            print(x)
             
         # if not is_return and not isinstance(return_type, VoidType):
         #     raise FunctionNotReturn(ast.name.name)
@@ -149,9 +149,17 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         left = ast.left
         right = ast.right
         typeLeft = self.visit(left, param)
-        typeRight= self.visit(right, param)
+        typeRight = self.visit(right, param)
         def check_type(accept_type, return_type=None):
-            if not isinstance(typeLeft,accept_type) or not isinstance(typeRight,accept_type):
+            if isinstance(typeLeft, VoidType) or isinstance(typeRight, VoidType):
+                raise TypeCannotBeInferred(ast)
+            if isinstance(typeLeft, Unknown) and isinstance(typeRight, Unknown):
+                raise TypeCannotBeInferred(ast)
+            if isinstance(typeLeft, Unknown):
+                return typeRight
+            elif isinstance(typeRight, Unknown):
+                return typeLeft
+            if not isinstance(typeLeft, accept_type) or not isinstance(typeRight, accept_type):
                 raise TypeMismatchInExpression(ast)
             if return_type:
                 return return_type
@@ -215,8 +223,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         rhs = ast.rhs
         lhsType = self.visit(lhs, param)
         rhsType = self.visit(rhs, param)
-        if isinstance(lhsType, VoidType):
-            raise TypeMismatchInExpression(ast)
+        if isinstance(rhsType, (VoidType, Unknown)):
+            raise TypeCannotBeInferred(ast)
         elif isinstance(lhsType, Unknown):
             for idx, x in enumerate(param):
                 if lhs.name == x.name:

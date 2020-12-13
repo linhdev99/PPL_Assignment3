@@ -25,9 +25,10 @@ Function: foo
 Parameter: x
 Body:
     Var: y, c;
-    c = 0;
-    y = c + 5;
-    foo1();
+    y = 3;
+    c = 1;
+    y = c + x;
+    foo();
     
 EndBody."""
         expect = str(Undeclared(Function(),"foo1"))
