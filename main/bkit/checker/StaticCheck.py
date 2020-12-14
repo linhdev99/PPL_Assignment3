@@ -192,18 +192,21 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         right = ast.right
         typeLeft = self.visit(left, param)
         typeRight = self.visit(right, param)
-        # print(left)
-        # print(right)
         left_name = ""
         right_name = ""
         if isinstance(left, ArrayCell):
             left_name = left.arr.name 
         elif isinstance(typeLeft, Unknown):
             left_name = left.name
+        elif isinstance(typeLeft, CallExpr):
+            left_name = left.method.name
+            
         if isinstance(right, ArrayCell):
             right_name = right.arr.name 
         elif isinstance(typeRight, Unknown):
             right_name = right.name
+        elif isinstance(typeRight, CallExpr):
+            right_name = right.method.name
         
         def check_type(accept_type, return_type=None):
             # if isinstance(typeLeft, VoidType) or isinstance(typeRight, VoidType):
@@ -322,6 +325,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitCallExpr(self, ast, param):
         check_id = self.visit(ast.method, param)
         check_type = None
+        length = 0
         if ast.param != []:
             for x in ast.param:
                 check_exp = self.visit(x, param)
@@ -329,7 +333,10 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                     raise TypeCannotBeInferred(ast)
         for x in param:
             if ast.method.name == x.name:
+                length = len(x.mtype.intype);
                 check_type = x.mtype.restype
+        if length != len(ast.param):
+            raise TypeMismatchInExpression(ast)
         return check_type
         
     

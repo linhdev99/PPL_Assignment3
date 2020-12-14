@@ -26,8 +26,8 @@ Parameter: x, y
 Body:
     Var: a[3][3], b[3] = {1,2,3}, c = 1.5, d[2] = {1.3, 1.2e3};
     a[b[1] + 1] = d[1] *. c;
-    x = d;
-    y = "Value";
+    x = d[3];
+    y = int_of_string("1") + 1;
     foo1(1,d[1],x);
 EndBody.
 Function: foo1
