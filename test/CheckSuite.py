@@ -33,8 +33,23 @@ EndBody.
 Function: foo1
 Parameter: x, y, z
 Body:
+    Var: a = 11;
     x = 1;
     y = 1.5;
+    If !(a > 10) Then
+        Var: x;
+        x = True;
+    ElseIf !(y >. 1.2) && True Then
+        Var: x;
+        x = "String";
+    Else
+        Var: f = 1;
+        For (f = 1, f < 10, 1) Do
+            Var: x[3];
+            x = {1,2,3}; 
+        EndFor.
+    EndIf.
+    a = 2;
 EndBody.
         """
 #         input = """

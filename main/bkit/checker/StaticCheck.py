@@ -178,9 +178,9 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 for idx, y in enumerate(local_envi[:length]):
                     x.mtype.intype[idx] = y.mtype.restype
                 
-        for x in (local_envi + param):
-            print(x)
-        print("=====================")
+        # for x in (local_envi + param):
+        #     print(x)
+        # print("=====================")
             
         # if not is_return and not isinstance(return_type, VoidType):
         #     raise FunctionNotReturn(ast.name.name)
@@ -396,13 +396,15 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             raise TypeCannotBeInferred(ast)
         elif isinstance(lhsType, Unknown) and not isinstance(rhsType, Unknown):
             for idx, x in enumerate(param):
-                if lhs_name == x.name:
+                if lhs_name == x.name and isinstance(x.mtype.restype, Unknown):
                     # param[idx].mtype.restype = rhsType
                     x.mtype.restype = rhsType
+                    #break
         elif not isinstance(lhsType, Unknown) and isinstance(rhsType, Unknown):
             for idx, x in enumerate(param):
                 if rhs.name == x.name:
                     param[idx].mtype.restype = lhsType
+                    break
         elif not isinstance(lhsType, type(rhsType)):
             raise TypeMismatchInStatement(ast)  #xem lai cho nay
         elif isinstance(lhsType, ArrayType) and isinstance(rhsType, ArrayType):
@@ -417,10 +419,45 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         
     
     def visitIf(self, ast, param):
-        return None
+        ifthenStmt = ast.ifthenStmt
+        elseStmt = ast.elseStmt
+        local_var = []
+        for x in ifthenStmt:
+            local_var = []
+            expr = x[0]
+            vardecl = x[1]
+            stmt = x[2]
+            typeExpr = self.visit(expr, param)
+            for y in vardecl:
+                temp = self.visit(y, local_var)
+                local_var.append(temp)
+            for y in stmt:
+                self.visit(y, local_var + param)          
+        local_var = []
+        for x in elseStmt[0]:
+            temp = self.visit(x, local_var)
+            local_var.append(temp)
+        for x in elseStmt[1]:
+            self.visit(x, local_var + param) 
+            
+        for y in (local_var + param):
+            print(y)         
     
     def visitFor(self, ast, param):
-        return None
+        local_var = []
+        typeIdx = self.visit(ast.idx1, param)
+        print(typeIdx)
+        if not isinstance(typeIdx, (IntType, Unknown)):
+            raise TypeMismatchInStatement(ast)
+        exp1 = self.visit(ast.expr1, param)
+        exp2 = self.visit(ast.expr2, param)
+        exp3 = self.visit(ast.expr3, param)
+        print(exp1)
+        for x in ast.loop[0]:
+            temp = self.visit(x, local_var)
+            local_var.append(temp)
+        for x in ast.loop[1]:
+            self.visit(x, local_var + param)
     
     def visitContinue(self, ast, param):
         return None
