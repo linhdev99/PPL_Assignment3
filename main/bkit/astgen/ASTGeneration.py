@@ -77,6 +77,8 @@ class ASTGeneration(BKITVisitor):
             return self.visitString_lit(ctx.string_lit())
         elif ctx.bool_lit():
             return self.visitBool_lit(ctx.bool_lit())
+        else:
+            return self.visitAll_lit(ctx.all_lit(0))
 
     def visitFunc_declare(self, ctx:BKITParser.Func_declareContext):
         getIdFunc = Id(ctx.ID().getText())

@@ -15,17 +15,56 @@ class CheckSuite(unittest.TestCase):
 
     def test_1(self):
         """Simple program: main"""
-        input = """
-Var: x;
-Function: main
-Body:
-    Var: x;
-EndBody.
-Function: foo
-Parameter: x, e
-Body:
-    Var: y[4][4][5], c[2][2][3] = {{{1,2,3},{4,5,6}},{{1,2,3},{8,9,20}}};    
-EndBody."""
+#         input = """
+# Var: x;
+# Function: main
+# Body:
+#     Var: x;
+# EndBody.
+# Function: foo
+# Parameter: x, e
+# Body:
+#     Var: y[2], c[2][2][3] = {{{1,2,3},{4,5,6}},{{1,2,3},{8,9,10}}};
+# EndBody."""
+        input = Program(
+    [
+        FuncDecl(
+            Id("main"),
+            [],
+            (
+                [
+                    VarDecl(
+                        Id("x"),
+                        [2,3],
+                        None
+                    )
+                ],
+                [
+                    Assign(
+                        Id("x"),
+                        ArrayLiteral(
+                            [
+                                ArrayLiteral(
+                                [
+                                    IntLiteral(1),
+                                    IntLiteral(2),
+                                    IntLiteral(3)
+                                ]
+                                ),
+                                ArrayLiteral(
+                                [
+                                    IntLiteral(4),
+                                    IntLiteral(5),
+                                    IntLiteral(6)
+                                ]
+                                )
+                            ]
+                        )
+                    )
+                ]
+            )
+        )
+    ])
         expect = str(Undeclared(Function(),"foo1"))
         self.assertTrue(TestChecker.test(input,expect,401))
 

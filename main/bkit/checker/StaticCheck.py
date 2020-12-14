@@ -104,16 +104,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         #     print(x)
         # print("===========================")
         
-    def visitVarDecl(self, ast, param):
-        def checkBlockLit(dimen, arrList):
-            if dimen[0] != len(arrList):
-                raise TypeCannotBeInferred(ast)
-            curDimen = dimen[1:]
-            if curDimen == []:
-                return True
-            for x in arrList:
-                checkBlockLit(curDimen, x.value)
-            
+    def visitVarDecl(self, ast, param):    
         for x in param:
             if ast.variable.name == x.name:
                 raise Redeclared(Variable(), ast.variable.name)
@@ -122,8 +113,9 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 raise TypeMismatchInExpression(ast)
         if ast.varInit:
             if ast.varDimen != []:
-                checkBlockLit(ast.varDimen, ast.varInit.value)
-            varType = self.visit(ast.varInit, ast.varDimen)
+                varType = self.visit(ast.varInit, (ast.varDimen, param))
+            else:
+                varType = self.visit(ast.varInit, param)
         else:
             if ast.varDimen != []:
                 varType = ArrayType(ast.varDimen, Unknown())
@@ -167,9 +159,9 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         for idx, x in enumerate(param):
             if x.name == ast.name.name:
                 param[idx] = func
-        # for x in (local_envi + param):
-        #     print(x)
-        # print("=====================")
+        for x in (local_envi + param):
+            print(x)
+        print("=====================")
             
         # if not is_return and not isinstance(return_type, VoidType):
         #     raise FunctionNotReturn(ast.name.name)
@@ -274,8 +266,19 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitAssign(self, ast, param):
         lhs = ast.lhs
         rhs = ast.rhs
+        dimen = []
+        # check lhs co phai la ArrayType
+        for x in param:
+            if lhs.name == x.name:
+                if isinstance(x.mtype.restype, ArrayType):
+                    dimen = x.mtype.restype.dimen
+                    break
         lhsType = self.visit(lhs, param)
-        rhsType = self.visit(rhs, param)
+        if isinstance(rhs, ArrayLiteral):
+            rhsType = self.visit(rhs, (dimen, param))
+        else:
+            rhsType = self.visit(rhs, param)
+        # visit  
         if isinstance(rhsType, VoidType):
             raise TypeCannotBeInferred(ast)
         elif isinstance(lhsType, Unknown) and not isinstance(rhsType, Unknown):
@@ -288,6 +291,11 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                     param[idx].mtype.restype = lhsType
         elif not isinstance(lhsType, type(rhsType)):
             raise TypeCannotBeInferred(ast)  #xem lai cho nay
+        elif isinstance(lhsType, ArrayType) and isinstance(rhsType, ArrayType):
+            for idx, x in enumerate(param):
+                if lhs.name == x.name:
+                    param[idx].mtype.restype = rhsType
+                    break
         # else:
         #     for idx, x in enumerate(param):
         #        if lhs.name == x.name:
@@ -338,6 +346,23 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return StringType()
 
     def visitArrayLiteral(self, ast, param):
+        # check ArrayType
+        dimen = []
+        def checkBlockLit(dimen, arrList):
+            # print(dimen[0])
+            # print(arrList)
+            # print("********")
+            if dimen[0] != len(arrList):
+                raise TypeCannotBeInferred(ast)
+            curDimen = dimen[1:]
+            if curDimen == []:
+                return True
+            for x in arrList:
+                checkBlockLit(curDimen, x.value)
+        if isinstance(param, tuple):
+            dimen = param[0]
+            checkBlockLit(param[0], ast.value)
+            param = param[1]
         getType = Unknown()
         head = self.visit(ast.value[0],param)
         for x in ast.value:
@@ -347,4 +372,4 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         getType = head
         if isinstance(getType, ArrayType):
             getType = getType.eletype
-        return ArrayType(param, getType)
+        return ArrayType(dimen, getType)

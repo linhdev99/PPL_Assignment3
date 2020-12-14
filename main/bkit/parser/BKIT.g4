@@ -141,7 +141,7 @@ bool_lit: TRUE | FALSE;
 int_lit: INTLIT;
 float_lit: FLOATLIT;
 string_lit: STRINGLIT;
-all_lit: int_lit | float_lit | string_lit | bool_lit;
+all_lit: int_lit | float_lit | string_lit | bool_lit ;
 
 RELATIONAL: RELATIONAL_FLOAT | RELATIONAL_INT;
 RELATIONAL_INT:  EQINT | NEQINT | GTINT | LTINT | GTEINT | LTEINT ;
