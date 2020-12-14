@@ -24,7 +24,7 @@ EndBody.
 Function: foo
 Parameter: x, e
 Body:
-    Var: y[4][4][5], c[2][2][3] = {{{1,2,3},{4,5,6}},{{1,2,3},{8,9,10}}};    
+    Var: y[4][4][5], c[2][2][3] = {{{1,2,3},{4,5,6}},{{1,2,3},{8,9,20}}};    
 EndBody."""
         expect = str(Undeclared(Function(),"foo1"))
         self.assertTrue(TestChecker.test(input,expect,401))

@@ -13,4 +13,4 @@ def extList(lst):
                 ele.append(x)
         return ele
 
-print(extList(y))
+print(y[1:][1:][1:][1:])

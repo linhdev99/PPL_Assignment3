@@ -105,6 +105,15 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         # print("===========================")
         
     def visitVarDecl(self, ast, param):
+        def checkBlockLit(dimen, arrList):
+            if dimen[0] != len(arrList):
+                raise TypeCannotBeInferred(ast)
+            curDimen = dimen[1:]
+            if curDimen == []:
+                return True
+            for x in arrList:
+                checkBlockLit(curDimen, x.value)
+            
         for x in param:
             if ast.variable.name == x.name:
                 raise Redeclared(Variable(), ast.variable.name)
@@ -112,6 +121,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             if not isinstance(x, int):
                 raise TypeMismatchInExpression(ast)
         if ast.varInit:
+            if ast.varDimen != []:
+                checkBlockLit(ast.varDimen, ast.varInit.value)
             varType = self.visit(ast.varInit, ast.varDimen)
         else:
             if ast.varDimen != []:
@@ -156,9 +167,9 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         for idx, x in enumerate(param):
             if x.name == ast.name.name:
                 param[idx] = func
-        for x in (local_envi + param):
-            print(x)
-        print("=====================")
+        # for x in (local_envi + param):
+        #     print(x)
+        # print("=====================")
             
         # if not is_return and not isinstance(return_type, VoidType):
         #     raise FunctionNotReturn(ast.name.name)
@@ -327,15 +338,10 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return StringType()
 
     def visitArrayLiteral(self, ast, param):
-        # arraylit(int)
-        # arraylit(arraylit(int,int),arraylit(int,int))
-        # [2, 2]
-        # arraylit(arraylit(int,int),arraylit(int,int))
-        print(param[1:])
         getType = Unknown()
-        head = self.visit(ast.value[0],[])
+        head = self.visit(ast.value[0],param)
         for x in ast.value:
-           temp = self.visit(x,param[1:])
+           temp = self.visit(x,param)
            if not isinstance(head, type(temp)):
                 raise TypeCannotBeInferred(ast)
         getType = head
