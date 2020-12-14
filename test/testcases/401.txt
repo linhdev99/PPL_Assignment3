@@ -5,12 +5,13 @@ Body:
     Var: x;
 EndBody.
 Function: foo
-Parameter: x
+Parameter: x, e
 Body:
     Var: y, c;
-    y = 3;
+    y = 10;
     c = 1;
-    y = c + x;
-    foo();
+    x = 1;
+    y = foo(e);
+    foo(e);
     
 EndBody.

@@ -84,8 +84,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             elif isinstance(x, FuncDecl):
                 lstParameter = []
                 for y in x.param:
-                    temp = self.visit(y, lstParameter)
-                    lstParameter.append(temp.mtype.restype)                    
+                    lstParameter.append(Unknown())                    
                 func = Symbol(
                     x.name.name,
                     MType(lstParameter,VoidType())
@@ -118,15 +117,17 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitFuncDecl(self, ast, param):
         local_envi = []
         para_list = []
+        para_dict = {}
         is_return = False
-        return_type = []
+        return_type = VoidType()
         nameFunc = ast.name.name;
         for x in ast.param:
-            if x.variable.name in para_list:
+            if x.variable.name in para_dict:
                 raise Redeclared(Parameter(), x.variable.name)
             else:
-                para_list.append(x.variable.name)
+                #para_list.append(x.variable.name)
                 temp = self.visit(x, local_envi)
+                para_dict[x.variable.name] = temp
                 local_envi.append(temp)
         for vardecl in ast.body[0]:
             temp = self.visit(vardecl, local_envi)
@@ -137,8 +138,21 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                     is_return = True
             else:
                 self.visit(stmt, local_envi + param)
-        for x in param:
-            print(x)
+                
+        newLstParameter = []
+        for x in local_envi:
+            if x.name in para_dict:
+                newLstParameter.append(x.mtype.restype)
+        func = Symbol(
+                    ast.name,
+                    MType(newLstParameter,return_type)
+                )
+        for idx, x in enumerate(param):
+            if x.name == ast.name.name:
+                param[idx] = func
+        # for x in param:
+        #     print(x)
+        # print("=====================")
             
         # if not is_return and not isinstance(return_type, VoidType):
         #     raise FunctionNotReturn(ast.name.name)
@@ -152,20 +166,29 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         typeRight = self.visit(right, param)
         def check_type(accept_type, return_type=None):
             if isinstance(typeLeft, VoidType) or isinstance(typeRight, VoidType):
-                raise TypeCannotBeInferred(ast)
+                raise TypeMismatchInExpression(ast)
             if isinstance(typeLeft, Unknown) and isinstance(typeRight, Unknown):
                 raise TypeCannotBeInferred(ast)
-            if isinstance(typeLeft, Unknown):
-                return typeRight
-            elif isinstance(typeRight, Unknown):
-                return typeLeft
+            if isinstance(typeLeft, Unknown) and isinstance(typeRight, accept_type):
+                return return_type
+            elif isinstance(typeRight, Unknown) and isinstance(typeLeft, accept_type):
+                return return_type
             if not isinstance(typeLeft, accept_type) or not isinstance(typeRight, accept_type):
                 raise TypeMismatchInExpression(ast)
             if return_type:
                 return return_type
         
         if op in ['+', '-', '*', '\\']:
-            return check_type(IntType, IntType())
+            retype = check_type(IntType, IntType())
+            if isinstance(typeLeft, Unknown):
+                for idx, x in enumerate(param):
+                       if left.name == x.name:
+                            param[idx].mtype.restype = IntType()
+            elif isinstance(typeRight, Unknown):
+                for idx, x in enumerate(param):
+                       if right.name == x.name:
+                            param[idx].mtype.restype = IntType()
+            return retype
         if op in ['+.', '-.', '*.', '\\.']:
             return check_type(FloatType, FloatType())
         if op in ['%']:
@@ -183,6 +206,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitUnaryOp(self, ast, param):
         op = ast.op
         expr = self.visit(ast.body, param)
+        if isinstance(expr, Unknown):
+            raise TypeCannotBeInferred(ast)
         if ast.op == '!':
             if isinstance(expr, BoolType):
                 return expr
@@ -200,7 +225,18 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 raise TypeMismatchInExpression(ast)
     
     def visitCallExpr(self, ast, param):
-        return None
+        check_id = self.visit(ast.method, param)
+        check_type = None
+        if ast.param != []:
+            for x in ast.param:
+                check_exp = self.visit(x, param)
+                if isinstance(check_exp, Unknown):
+                    raise TypeCannotBeInferred(ast)
+        for x in param:
+            if ast.method.name == x.name:
+                check_type = x.mtype.restype
+        return check_type
+        
     
     def visitId(self, ast, param):
         is_declare = False
@@ -223,8 +259,10 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         rhs = ast.rhs
         lhsType = self.visit(lhs, param)
         rhsType = self.visit(rhs, param)
-        if isinstance(rhsType, (VoidType, Unknown)):
+        if isinstance(rhsType, Unknown):
             raise TypeCannotBeInferred(ast)
+        if isinstance(rhsType, VoidType):
+            raise TypeMismatchInExpression(ast)
         elif isinstance(lhsType, Unknown):
             for idx, x in enumerate(param):
                 if lhs.name == x.name:
@@ -260,8 +298,11 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitCallStmt(self, ast, param):
         check_id = self.visit(ast.method, param)
-        for x in ast.param:
-            check_exp = self.visit(x, param)
+        if ast.param != []:
+            for x in ast.param:
+                check_exp = self.visit(x, param)
+                if isinstance(check_exp, Unknown):
+                    raise TypeCannotBeInferred(ast)
     
     def visitIntLiteral(self, ast, param):
         return IntType()
