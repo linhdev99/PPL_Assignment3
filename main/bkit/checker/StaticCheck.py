@@ -327,18 +327,18 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return StringType()
 
     def visitArrayLiteral(self, ast, param):
-        #arraylit(1)
-        #arraylit(arraylit(int,int),arraylit(int,int))
+        # arraylit(int)
+        # arraylit(arraylit(int,int),arraylit(int,int))
+        # [2, 2]
+        # arraylit(arraylit(int,int),arraylit(int,int))
+        print(param[1:])
         getType = Unknown()
-        if isinstance(ast.value, list):
-            head = self.visit(ast.value[0],[])
-            for x in ast.value:
-                temp = self.visit(x,[])
-                if not isinstance(head, type(temp)):
-                    raise TypeCannotBeInferred(ast)
-            getType = head
-        else:
-            getType = self.visit(ast.value, [])
+        head = self.visit(ast.value[0],[])
+        for x in ast.value:
+           temp = self.visit(x,param[1:])
+           if not isinstance(head, type(temp)):
+                raise TypeCannotBeInferred(ast)
+        getType = head
         if isinstance(getType, ArrayType):
             getType = getType.eletype
         return ArrayType(param, getType)
