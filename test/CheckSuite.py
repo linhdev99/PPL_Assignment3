@@ -22,11 +22,19 @@ Body:
     Var: x;
 EndBody.
 Function: foo
-Parameter: x
+Parameter: x, y
 Body:
     Var: a[3][3], b[3] = {1,2,3}, c = 1.5, d[2] = {1.3, 1.2e3};
     a[b[1] + 1] = d[1] *. c;
-    a[1] = 1+ 2 + 3; 
+    x = d;
+    y = "Value";
+    foo1(1,d[1],x);
+EndBody.
+Function: foo1
+Parameter: x, y, z
+Body:
+    x = 1;
+    y = 1.5;
 EndBody.
         """
 #         input = """
@@ -96,7 +104,7 @@ EndBody.
 #             )
 #         )
 #     ])
-        expect = str(Undeclared(Function(),"foo1"))
+        expect = ""
         self.assertTrue(TestChecker.test(input,expect,401))
 
     # def test_0(self):

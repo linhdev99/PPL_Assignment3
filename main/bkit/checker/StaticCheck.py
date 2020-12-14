@@ -130,7 +130,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         is_return = False
         return_type = VoidType()
         nameFunc = ast.name.name;
-        for x in ast.param:
+        # kiem tra tung phan tu trong parameter cua function
+        for idx,x in enumerate(ast.param):
             if x.variable.name in para_dict:
                 raise Redeclared(Parameter(), x.variable.name)
             else:
@@ -138,27 +139,45 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 temp = self.visit(x, local_envi)
                 para_dict[x.variable.name] = temp
                 local_envi.append(temp)
+                for y in param:
+                    if nameFunc == y.name:
+                        temp.mtype.restype = y.mtype.intype[idx]
+                
+        # Parameter function       
+        # newLstParameter = []
+        # for x in local_envi:
+        #     if x.name in para_dict:
+        #         newLstParameter.append(x.mtype.restype)
+        # func = Symbol(
+        #             ast.name.name,
+        #             MType(newLstParameter,return_type)
+        #         )
+        # print(func)
+        # print("####################")
+        # for idx, x in enumerate(param):
+        #     if x.name == ast.name.name:
+        #         param[idx] = func
+                
+        # visit variable declare        
         for vardecl in ast.body[0]:
             temp = self.visit(vardecl, local_envi)
             local_envi.append(temp)
+            
+        # visit function declare   
         for stmt in ast.body[1]:
             if isinstance(stmt, Return):
                 if self.visit(stmt, (local_envi + param, return_type)):
                     is_return = True
             else:
                 self.visit(stmt, local_envi + param)
+        
+        # update type parameter function
+        for x in param:
+            if nameFunc == x.name:
+                length = len(x.mtype.intype)
+                for idx, y in enumerate(local_envi[:length]):
+                    x.mtype.intype[idx] = y.mtype.restype
                 
-        newLstParameter = []
-        for x in local_envi:
-            if x.name in para_dict:
-                newLstParameter.append(x.mtype.restype)
-        func = Symbol(
-                    ast.name.name,
-                    MType(newLstParameter,return_type)
-                )
-        for idx, x in enumerate(param):
-            if x.name == ast.name.name:
-                param[idx] = func
         for x in (local_envi + param):
             print(x)
         print("=====================")
@@ -173,8 +192,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         right = ast.right
         typeLeft = self.visit(left, param)
         typeRight = self.visit(right, param)
-        print(left)
-        print(right)
+        # print(left)
+        # print(right)
         left_name = ""
         right_name = ""
         if isinstance(left, ArrayCell):
@@ -371,7 +390,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         elif isinstance(lhsType, Unknown) and not isinstance(rhsType, Unknown):
             for idx, x in enumerate(param):
                 if lhs_name == x.name:
-                    param[idx].mtype.restype = rhsType
+                    # param[idx].mtype.restype = rhsType
+                    x.mtype.restype = rhsType
         elif not isinstance(lhsType, Unknown) and isinstance(rhsType, Unknown):
             for idx, x in enumerate(param):
                 if rhs.name == x.name:
@@ -412,11 +432,27 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitCallStmt(self, ast, param):
         check_id = self.visit(ast.method, param)
+        getIntype = []
+        newParamFunc = []
+        for x in param:
+            if x.name == ast.method.name:
+                if not isinstance(x.mtype.restype, VoidType):
+                    raise TypeMismatchInStatement(ast)
+                getIntype = x.mtype.intype
+        if len(ast.param) != len(getIntype):
+            raise TypeMismatchInStatement(ast)
         if ast.param != []:
-            for x in ast.param:
+            for idx, x in enumerate(ast.param):
                 check_exp = self.visit(x, param)
                 if isinstance(check_exp, Unknown):
                     raise TypeCannotBeInferred(ast)
+                if isinstance(getIntype[idx], Unknown) or isinstance(getIntype[idx], type(check_exp)):    
+                    newParamFunc.append(check_exp)
+                elif not isinstance(getIntype[idx], type(check_exp)):
+                    raise TypeMismatchInStatement(ast)  
+            for x in param:
+                if x.name == ast.method.name:
+                    x.mtype.intype = newParamFunc              
         # for x in param:
         #     print(x)
     

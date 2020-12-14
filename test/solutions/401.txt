@@ -1,1 +1,0 @@
-Type Mismatch In Statement: Assign(ArrayCell(Id(a),[IntLiteral(1)]),BinaryOp(+,BinaryOp(+,IntLiteral(1),IntLiteral(2)),IntLiteral(3)))
