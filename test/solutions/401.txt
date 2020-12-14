@@ -1,1 +1,1 @@
-Type Cannot Be Inferred: ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2),IntLiteral(3)),ArrayLiteral(IntLiteral(4),IntLiteral(5)))
+Type Mismatch In Statement: Assign(ArrayCell(Id(a),[IntLiteral(1)]),BinaryOp(+,BinaryOp(+,IntLiteral(1),IntLiteral(2)),IntLiteral(3)))

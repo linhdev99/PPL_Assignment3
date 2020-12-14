@@ -1,1 +1,14 @@
-Program([FuncDecl(Id(main)[],([VarDecl(Id(x),[2,3])][Assign(Id(x),ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2),IntLiteral(3)),ArrayLiteral(IntLiteral(4),IntLiteral(5))))]))])
+
+        Var: x;
+Function: main
+Body:
+    Var: x;
+EndBody.
+Function: foo
+Parameter: x
+Body:
+    Var: a[3][3], b[3] = {1,2,3}, c = 1.5, d[2] = {1.3, 1.2e3};
+    a[b[1] + 1] = d[1] *. c;
+    a[1] = 1+ 2 + 3; 
+EndBody.
+        

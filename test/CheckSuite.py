@@ -15,8 +15,22 @@ class CheckSuite(unittest.TestCase):
 
     def test_1(self):
         """Simple program: main"""
+        input = """
+        Var: x;
+Function: main
+Body:
+    Var: x;
+EndBody.
+Function: foo
+Parameter: x
+Body:
+    Var: a[3][3], b[3] = {1,2,3}, c = 1.5, d[2] = {1.3, 1.2e3};
+    a[b[1] + 1] = d[1] *. c;
+    a[1] = 1+ 2 + 3; 
+EndBody.
+        """
 #         input = """
-# Var: x;
+# Var: x;b
 # Function: main
 # Body:
 #     Var: x;
@@ -26,45 +40,62 @@ class CheckSuite(unittest.TestCase):
 # Body:
 #     Var: y[2], c[2][2][3] = {{{1,2,3},{4,5,6}},{{1,2,3},{8,9,10}}};
 # EndBody."""
-        input = Program(
-    [
-        FuncDecl(
-            Id("main"),
-            [],
-            (
-                [
-                    VarDecl(
-                        Id("x"),
-                        [2,3],
-                        None
-                    )
-                ],
-                [
-                    Assign(
-                        Id("x"),
-                        ArrayLiteral(
-                            [
-                                ArrayLiteral(
-                                [
-                                    IntLiteral(1),
-                                    IntLiteral(2),
-                                    IntLiteral(3)
-                                ]
-                                ),
-                                ArrayLiteral(
-                                [
-                                    IntLiteral(4),
-                                    IntLiteral(5),
-                                    IntLiteral(6)
-                                ]
-                                )
-                            ]
-                        )
-                    )
-                ]
-            )
-        )
-    ])
+#         input = Program(
+#     [
+#         FuncDecl(
+#             Id("main"),
+#             [],
+#             (
+#                 [
+#                     VarDecl(
+#                         Id("x"),
+#                         [2,3],
+#                         ArrayLiteral(
+#                             [
+#                                 ArrayLiteral(
+#                                 [
+#                                     IntLiteral(1),
+#                                     IntLiteral(2),
+#                                     IntLiteral(3)
+#                                 ]
+#                                 ),
+#                                 ArrayLiteral(
+#                                 [
+#                                     IntLiteral(4),
+#                                     IntLiteral(5),
+#                                     IntLiteral(6)
+#                                 ]
+#                                 )
+#                             ]
+#                         )
+#                     )
+#                 ],
+#                 [
+#                     Assign(
+#                         Id("x"),
+#                         ArrayLiteral(
+#                             [
+#                                 ArrayLiteral(
+#                                 [
+#                                     IntLiteral(1),
+#                                     IntLiteral(2),
+#                                     IntLiteral(3)
+#                                 ]
+#                                 ),
+#                                 ArrayLiteral(
+#                                 [
+#                                     IntLiteral(4),
+#                                     IntLiteral(5),
+#                                     IntLiteral(6)
+#                                 ]
+#                                 )
+#                             ]
+#                         )
+#                     )
+#                 ]
+#             )
+#         )
+#     ])
         expect = str(Undeclared(Function(),"foo1"))
         self.assertTrue(TestChecker.test(input,expect,401))
 
