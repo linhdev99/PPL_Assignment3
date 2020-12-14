@@ -108,10 +108,16 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         for x in param:
             if ast.variable.name == x.name:
                 raise Redeclared(Variable(), ast.variable.name)
+        for x in ast.varDimen:
+            if not isinstance(x, int):
+                raise TypeMismatchInExpression(ast)
         if ast.varInit:
             varType = self.visit(ast.varInit, ast.varDimen)
         else:
-            varType = Unknown()
+            if ast.varDimen != []:
+                varType = ArrayType(ast.varDimen, Unknown())
+            else:
+                varType = Unknown()
         return Symbol(ast.variable.name, MType([], varType))
     
     def visitFuncDecl(self, ast, param):
@@ -144,15 +150,15 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             if x.name in para_dict:
                 newLstParameter.append(x.mtype.restype)
         func = Symbol(
-                    ast.name,
+                    ast.name.name,
                     MType(newLstParameter,return_type)
                 )
         for idx, x in enumerate(param):
             if x.name == ast.name.name:
                 param[idx] = func
-        # for x in param:
-        #     print(x)
-        # print("=====================")
+        for x in (local_envi + param):
+            print(x)
+        print("=====================")
             
         # if not is_return and not isinstance(return_type, VoidType):
         #     raise FunctionNotReturn(ast.name.name)
@@ -165,14 +171,10 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         typeLeft = self.visit(left, param)
         typeRight = self.visit(right, param)
         def check_type(accept_type, return_type=None):
-            if isinstance(typeLeft, VoidType) or isinstance(typeRight, VoidType):
-                raise TypeMismatchInExpression(ast)
-            if isinstance(typeLeft, Unknown) and isinstance(typeRight, Unknown):
+            # if isinstance(typeLeft, VoidType) or isinstance(typeRight, VoidType):
+            #     raise TypeMismatchInExpression(ast)
+            if isinstance(typeLeft, Unknown) or isinstance(typeRight, Unknown):
                 raise TypeCannotBeInferred(ast)
-            if isinstance(typeLeft, Unknown) and isinstance(typeRight, accept_type):
-                return return_type
-            elif isinstance(typeRight, Unknown) and isinstance(typeLeft, accept_type):
-                return return_type
             if not isinstance(typeLeft, accept_type) or not isinstance(typeRight, accept_type):
                 raise TypeMismatchInExpression(ast)
             if return_type:
@@ -180,19 +182,21 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         
         if op in ['+', '-', '*', '\\']:
             retype = check_type(IntType, IntType())
-            if isinstance(typeLeft, Unknown):
-                for idx, x in enumerate(param):
-                       if left.name == x.name:
-                            param[idx].mtype.restype = IntType()
-            elif isinstance(typeRight, Unknown):
-                for idx, x in enumerate(param):
-                       if right.name == x.name:
-                            param[idx].mtype.restype = IntType()
+            # if isinstance(typeLeft, Unknown):
+            #     for idx, x in enumerate(param):
+            #            if left.name == x.name:
+            #                 param[idx].mtype.restype = IntType()
+            # elif isinstance(typeRight, Unknown):
+            #     for idx, x in enumerate(param):
+            #            if right.name == x.name:
+            #                 param[idx].mtype.restype = IntType()
             return retype
-        if op in ['+.', '-.', '*.', '\\.']:
-            return check_type(FloatType, FloatType())
+        if op in ['+.', '-.', '*.', '\\.']: 
+            retype = check_type(FloatType, FloatType())
+            return retype
         if op in ['%']:
-            return check_type(IntType, IntType())
+            retypr = check_type(IntType, IntType())
+            return retype
         if op in ['<', '<=', '>', '>=','!=']:
             return check_type(IntType, BoolType())
         if op in ['&&', '||']:
@@ -252,27 +256,31 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         
     
     def visitArrayCell(self, ast, param):
-        print(ast.idx)
+        for x in ast.idx:
+            print(ast)
+        print("***************")
     
     def visitAssign(self, ast, param):
         lhs = ast.lhs
         rhs = ast.rhs
         lhsType = self.visit(lhs, param)
         rhsType = self.visit(rhs, param)
-        if isinstance(rhsType, Unknown):
-            raise TypeCannotBeInferred(ast)
         if isinstance(rhsType, VoidType):
-            raise TypeMismatchInExpression(ast)
-        elif isinstance(lhsType, Unknown):
+            raise TypeCannotBeInferred(ast)
+        elif isinstance(lhsType, Unknown) and not isinstance(rhsType, Unknown):
             for idx, x in enumerate(param):
                 if lhs.name == x.name:
                     param[idx].mtype.restype = rhsType
-        elif not isinstance(lhsType, type(rhsType)):
-            raise TypeMismatchInExpression(ast)
-        else:
+        elif not isinstance(lhsType, Unknown) and isinstance(rhsType, Unknown):
             for idx, x in enumerate(param):
-               if lhs.name == x.name:
-                    param[idx].mtype.restype = rhsType
+                if rhs.name == x.name:
+                    param[idx].mtype.restype = lhsType
+        elif not isinstance(lhsType, type(rhsType)):
+            raise TypeCannotBeInferred(ast)  #xem lai cho nay
+        # else:
+        #     for idx, x in enumerate(param):
+        #        if lhs.name == x.name:
+        #             param[idx].mtype.restype = rhsType
         
     
     def visitIf(self, ast, param):
@@ -303,6 +311,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 check_exp = self.visit(x, param)
                 if isinstance(check_exp, Unknown):
                     raise TypeCannotBeInferred(ast)
+        # for x in param:
+        #     print(x)
     
     def visitIntLiteral(self, ast, param):
         return IntType()
@@ -317,8 +327,18 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return StringType()
 
     def visitArrayLiteral(self, ast, param):
-        eleType = []
-        for x in ast.value:
-            temp = self.visit(x, param)
-            eleType.append(temp)    
-        return ArrayType(param, eleType)
+        #arraylit(1)
+        #arraylit(arraylit(int,int),arraylit(int,int))
+        getType = Unknown()
+        if isinstance(ast.value, list):
+            head = self.visit(ast.value[0],[])
+            for x in ast.value:
+                temp = self.visit(x,[])
+                if not isinstance(head, type(temp)):
+                    raise TypeCannotBeInferred(ast)
+            getType = head
+        else:
+            getType = self.visit(ast.value, [])
+        if isinstance(getType, ArrayType):
+            getType = getType.eletype
+        return ArrayType(param, getType)

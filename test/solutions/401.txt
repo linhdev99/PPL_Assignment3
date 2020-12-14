@@ -1,1 +1,0 @@
-Type Cannot Be Inferred: CallExpr(Id(foo),[Id(e)])
