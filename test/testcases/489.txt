@@ -1,0 +1,7 @@
+
+        Var: test;
+        Function: main
+            Body:
+            test = test();
+            EndBody.
+        

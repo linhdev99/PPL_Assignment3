@@ -1,0 +1,10 @@
+
+        Var: arr = {{1,2},{3,4}};
+        Function: test_array
+            Body:
+                arr = arr[0] * 2 - 3 + (1\2);
+            EndBody.
+        Function: main
+            Body:
+            EndBody.
+        

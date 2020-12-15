@@ -1,0 +1,13 @@
+
+        Function: foo
+            Parameter: x
+            Body:
+            x=1.1;
+            Return { True };
+            EndBody.
+        Function: main
+            Parameter: x, y
+            Body:
+            foo(x)[0] = x || (x>y);
+            EndBody.
+        

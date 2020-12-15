@@ -1,0 +1,12 @@
+
+        Var: test, some;
+        Function: testExpression
+        Body:
+            some = 1 + 2 * 3 \ 2 - some % 5;
+            Return some;
+        EndBody.
+        Function: main
+            Body:
+            testExpression();
+            EndBody.
+        

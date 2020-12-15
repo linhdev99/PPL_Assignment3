@@ -1,0 +1,10 @@
+
+        Var: test[5];
+        Function: main
+            Parameter: x[5]
+            Body:
+            test[0] = 1;
+            main(test);
+            x[0] = 1.;
+            EndBody.
+        

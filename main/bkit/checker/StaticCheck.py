@@ -435,11 +435,17 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         else:
             rhsType = self.visit(rhs, param)
         # visit  
+        # print(rhsType)
         if isinstance(rhsType, VoidType):
             raise TypeCannotBeInferred(ast)
         elif isinstance(rhsType, TypeCannotBeInferred):
             raise TypeCannotBeInferred(ast)
+        elif isinstance(lhsType, Unknown) and isinstance(rhsType, Unknown):
+            raise TypeMismatchInExpression(rhs)
         elif isinstance(lhsType, Unknown) and not isinstance(rhsType, Unknown):
+            # print(rhsType)
+            # if isinstance(rhsType, ArrayType):
+            #     print(rhsType)
             for idx, x in enumerate(param):
                 if lhs_name == x.name and isinstance(x.mtype, Unknown):
                     x.mtype = rhsType

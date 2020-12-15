@@ -1,1 +1,1 @@
-Type Mismatch In Statement: CallStmt(Id(main),[])
+Undeclared Function: main

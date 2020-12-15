@@ -1,0 +1,7 @@
+
+        Var: test[5][5];
+        Function: main
+            Body:
+            test[1] = {1};
+            EndBody.
+        

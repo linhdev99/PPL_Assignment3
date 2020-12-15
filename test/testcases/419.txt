@@ -3,8 +3,8 @@
         Function: main
             Parameter: t
             Body:
-            t = 1 < 2;
-            While t Do ** neu While t thi sao? **
+            t = True;
+            While t Do
                 Var: t;
                 EndWhile.
             EndBody.

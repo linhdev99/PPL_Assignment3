@@ -1,0 +1,18 @@
+
+        Var: a;
+        Function: test_while_condition
+            Body:
+                While a < 0 Do
+                    Var: b[3][2] = {{1,2}, {3,4}, {5,6}};
+                    While a < 0 Do
+                        Var: b[3] = {1,2,3};
+                        a = a + 1 + b[1];
+                    EndWhile.
+                    a = a + 1 + b[1][1];
+                EndWhile.
+            EndBody.
+        Function: main
+            Body:
+            test_while_condition();
+            EndBody.
+        

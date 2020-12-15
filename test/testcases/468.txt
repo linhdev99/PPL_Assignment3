@@ -1,0 +1,8 @@
+
+        Var: test;
+        Function: main
+            Body:
+            main()[0] = 1;
+            Return {1};
+            EndBody.
+        

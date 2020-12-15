@@ -1,0 +1,8 @@
+
+        Var: test;
+        Function: main
+            Body:
+            Var: x;
+            x = (1+.1) == 1;
+            EndBody.
+        

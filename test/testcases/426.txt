@@ -3,7 +3,6 @@
         Function: main
             Parameter: x
             Body:
-            x = 1;
             x = test[0];
             EndBody.
         

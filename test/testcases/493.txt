@@ -1,0 +1,8 @@
+
+        Var: test;
+        Function: main
+            Body:
+            print(test);
+            test = 1;
+            EndBody.
+        

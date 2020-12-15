@@ -1,0 +1,15 @@
+
+        Var: test;
+        Function: foo
+            Parameter: x
+            Body:
+            x = 1.1;
+            Return {1.1};
+            EndBody.
+        Function: main
+            Parameter: x
+            Body:
+            foo(main(1))[0] = x +. 1.;
+            Return 1.1;
+            EndBody.
+        

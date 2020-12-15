@@ -1,0 +1,7 @@
+
+        Var: test;
+        Function: main
+            Body:
+            main()[0] = test+1;
+            EndBody.
+        

@@ -1,0 +1,1 @@
+Type Mismatch In Statement: While(BinaryOp(<,Id(a),IntLiteral(0)),[VarDecl(Id(b),[3],ArrayLiteral(IntLiteral(1),IntLiteral(2),IntLiteral(3)))],[Assign(Id(a),BinaryOp(+,BinaryOp(+,Id(a),IntLiteral(1)),ArrayCell(Id(b),[IntLiteral(1)])))])

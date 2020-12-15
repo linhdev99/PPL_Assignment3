@@ -3,7 +3,7 @@
             Parameter: x
             Body:
                Var: y = 1; **infer y:: int**
-               x = 1.0; **infer x:: float**
+               x = 1.0; **infer x:: float** 
                main(y); ** main:: int|float -> void?**
             EndBody.
         

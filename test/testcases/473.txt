@@ -1,0 +1,8 @@
+
+        Var: test;
+        Function: main
+            Body:
+            test = float_of_string("asda");
+            test = 1.;
+            EndBody.
+        

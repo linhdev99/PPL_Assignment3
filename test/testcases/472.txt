@@ -1,0 +1,8 @@
+
+        Var: test;
+        Function: main
+            Body:
+            test = float_to_int(1);
+            test = 1.+.1.;
+            EndBody.
+        

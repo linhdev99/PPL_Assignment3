@@ -1,9 +1,8 @@
 
-        Var: test = 5;
+        Var: test[2][2];
         Function: main
             Parameter: x
             Body:
-            x = 1;
-            x = test[1];
+            x= test[1];
             EndBody.
         

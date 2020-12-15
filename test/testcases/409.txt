@@ -6,8 +6,8 @@
             y = z + foo(x);
             EndBody.
         Function: foo
-            Parameter: x ** x --> Unknown --> Int **
+            Parameter: x
             Body:
-            x=1.1; ** x --> Int --> Error **
+            x=1.1;
             EndBody.
         

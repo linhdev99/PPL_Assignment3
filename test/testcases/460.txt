@@ -1,0 +1,7 @@
+
+        Var: test[1][1]={{1}};
+        Function: main
+            Body:
+            test[0] = {1};
+            EndBody.
+        

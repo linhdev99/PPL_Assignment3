@@ -1,0 +1,12 @@
+
+        Var: test;
+        Function: main
+            Parameter: x
+            Body:
+            Var: hihi;
+            print(hihi);
+            hihi = x;
+            print(main(x));
+            Return 1;
+            EndBody.
+        

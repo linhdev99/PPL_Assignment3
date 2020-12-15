@@ -1,0 +1,12 @@
+
+        Var: test[5];
+        Function: foo
+            Body:
+            Return 1;
+            EndBody.
+        Function: main
+            Body:
+            foo();
+            test[0] = foo();
+            EndBody.
+        
