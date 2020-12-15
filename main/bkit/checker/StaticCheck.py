@@ -134,6 +134,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         is_return = False
         return_type = VoidType()
         nameFunc = ast.name.name;
+        flag = 0
         for idx, x in enumerate(ast.param):
             # kiem tra tung phan tu trong parameter cua function
             if x.variable.name in para_dict:
@@ -170,8 +171,18 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         # visit function declare   
         for stmt in ast.body[1]:
             if isinstance(stmt, Return):
-                if self.visit(stmt, (local_envi + param, return_type)):
+                return_type = self.visit(stmt, local_envi + param)
+                if return_type != None:
                     is_return = True
+                for x in param:
+                    if isinstance(x.mtype, MType) and x.name == nameFunc:
+                        if x.mtype.restype == return_type:
+                            flag = 1
+                        elif flag == 0:
+                            x.mtype.restype = return_type
+                            flag = 1
+                        else:
+                            raise TypeMismatchInStatement(stmt)          
             else:
                 self.visit(stmt, local_envi + param)
         
@@ -232,7 +243,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             if isinstance(typeRight, Unknown) and isinstance(typeLeft, accept_type):
                 return return_type
             if not isinstance(typeLeft, accept_type) or not isinstance(typeRight, accept_type):
-                return TypeMismatchInExpression(ast)
+                raise  TypeMismatchInExpression(ast)
             if return_type:
                 return return_type
         
@@ -541,8 +552,11 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return None
     
     def visitReturn(self, ast, param):
-        return None
-        #print(param)
+        temp = None
+        if ast.expr != None:
+            temp = self.visit(ast.expr, param)
+        return temp
+            
     
     def visitDowhile(self, ast, param):
         typeExpr = self.visit(ast.exp, param)

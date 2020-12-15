@@ -5,19 +5,17 @@ from AST import *
 
 class CheckSuite(unittest.TestCase):
 
-#     def test_0(self):
-#         """Simple program: main"""
-#         input = """Function: main
-#                    Parameter: x[3], y
-#                    Body:
-#                         Var: z[2][3] = {{1,2,3},{4,5,6}};
-#                         Var: main, a;
-#                         x[1] = 1;
-#                         a = 1;
-#                    EndBody.
-#                    """
-#         expect = str("")
-#         self.assertTrue(TestChecker.test(input,expect,400))
+    # def test_0(self):
+    #     """Simple program: main"""
+    #     input = """Function: main
+    #                Parameter: x[3], y
+    #                Body:
+    #                     Return 1 + 2;
+    #                     y = 1;
+    #                EndBody.
+    #                """
+    #     expect = str("")
+    #     self.assertTrue(TestChecker.test(input,expect,400))
 #
 #
 #     def test_1(self):
@@ -685,17 +683,17 @@ class CheckSuite(unittest.TestCase):
     #     """
     #     expect = str(TypeCannotBeInferred(Assign(ArrayCell(CallExpr(Id('foo'),[]),[IntLiteral(0)]),IntLiteral(1))))
     #     self.assertTrue(TestChecker.test(input,expect,438))
-    # def test_439(self):
-    #     input  = """
-    #     Var: test;
-    #     Function: main
-    #         Parameter: test
-    #         Body:
-    #         Var: test;
-    #         EndBody.
-    #     """
-    #     expect = str(Redeclared(Variable(), 'test'))
-    #     self.assertTrue(TestChecker.test(input,expect,439))
+    def test_439(self):
+        input  = """
+        Var: test;
+        Function: main
+            Parameter: test
+            Body:
+            Var: test;
+            EndBody.
+        """
+        expect = str(Redeclared(Variable(), 'test'))
+        self.assertTrue(TestChecker.test(input,expect,439))
     # def test_440(self):
     #     input  = """
     #     Var: test;
@@ -717,21 +715,21 @@ class CheckSuite(unittest.TestCase):
     #     """
     #     expect = str(TypeMismatchInStatement(Assign(Id('test'),IntLiteral(1))))
     #     self.assertTrue(TestChecker.test(input,expect,440))
-    # def test_441(self):
-    #     input  = """
-    #     Var: test;
-    #     Function: foo
-    #         Parameter: x
-    #         Body:
-    #         Return;
-    #         EndBody.
-    #     Function: main
-    #         Body:
-    #         foo(foo(1));
-    #         EndBody.
-    #     """
-    #     expect = str(TypeMismatchInStatement(CallStmt(Id('foo'),[CallExpr(Id('foo'),[IntLiteral(1)])])))
-    #     self.assertTrue(TestChecker.test(input,expect,441))
+    def test_441(self):
+        input  = """
+        Var: test;
+        Function: foo
+            Parameter: x
+            Body:
+            Return;
+            EndBody.
+        Function: main
+            Body:
+            foo(foo(1));
+            EndBody.
+        """
+        expect = str(TypeMismatchInStatement(CallStmt(Id('foo'),[CallExpr(Id('foo'),[IntLiteral(1)])])))
+        self.assertTrue(TestChecker.test(input,expect,441))
     # def test_442(self):
     #     input  = """
     #     Var: test;
@@ -780,36 +778,37 @@ class CheckSuite(unittest.TestCase):
     #     """
     #     expect = str(TypeCannotBeInferred(Assign(ArrayCell(CallExpr(Id('foo'),[]),[IntLiteral(0)]),IntLiteral(1))))
     #     self.assertTrue(TestChecker.test(input,expect,444))
-    # def test_445(self):
-    #     input  = """
-    #     Var: test;
-    #     Function: main
-    #         Body:
-    #         If (test) Then
-    #             Var: test;
-    #             If (test) Then
-    #                 Var: test;
-    #                 test = 1;
-    #             EndIf.
-    #         EndIf.
-    #         test =2;
-    #         EndBody.
-    #     """
-    #     expect = str(TypeMismatchInStatement(Assign(Id('test'),IntLiteral(2))))
-    #     self.assertTrue(TestChecker.test(input,expect,445))
-    # def test_446(self):
-    #     input  = """
-    #     Var: arr = {{1,2},{3,4}};
-    #     Function: test_array
-    #         Body:
-    #             arr = arr[0] * 2 - 3 + (1\\2);
-    #         EndBody.
-    #     Function: main
-    #         Body:
-    #         EndBody.
-    #     """
-    #     expect = str(TypeMismatchInExpression(ArrayCell(Id('arr'),[IntLiteral(0)])))
-    #     self.assertTrue(TestChecker.test(input,expect,446))
+    def test_445(self):
+        input  = """
+        Var: test;
+        Function: main
+            Body:
+            test = True;
+            If (test) Then
+                Var: test = False;
+                If (test) Then
+                    Var: test;
+                    test = 1;
+                EndIf.
+            EndIf.
+            test =2;
+            EndBody.
+        """
+        expect = str(TypeMismatchInStatement(Assign(Id('test'),IntLiteral(2))))
+        self.assertTrue(TestChecker.test(input,expect,445))
+    def test_446(self):
+        input  = """
+        Var: arr = {{1,2},{3,4}};
+        Function: test_array
+            Body:
+                arr = arr[0] * 2 - 3 + (1\\2);
+            EndBody.
+        Function: main
+            Body:
+            EndBody.
+        """
+        expect = str(TypeMismatchInExpression(ArrayCell(Id('arr'),[IntLiteral(0)])))
+        self.assertTrue(TestChecker.test(input,expect,446))
     # def test_447(self):
     #     input  = """
     #     Var: test, x, y;
