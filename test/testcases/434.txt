@@ -1,13 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            If True Then
-                Return 1;
-            ElseIf False Then
-                Return 1.1;
-            Else
-                Return 2.1;
-            EndIf.
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(id),[2,3]),VarDecl(Id(id),[2,8])][]))])

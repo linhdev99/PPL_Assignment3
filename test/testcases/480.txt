@@ -1,8 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            Var: x;
-            x = (1+.1) == 1;
-            EndBody.
-        
+Program([VarDecl(Id(x),[1,2,3]),VarDecl(Id(y),[2,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2)),ArrayLiteral(IntLiteral(10),IntLiteral(20)))),FuncDecl(Id(main)[],([][]))])

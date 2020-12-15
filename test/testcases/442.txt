@@ -1,18 +1,1 @@
-
-        Var: test;
-        Function: foo
-            Parameter: x
-            Body:
-            Return ;
-            EndBody.
-        Function: foo1
-            Parameter: x
-            Body:
-            Return 1;
-            EndBody.
-        Function: main
-            Body:
-            Var: x;
-            x = foo(foo(1));
-            EndBody.
-        
+Program([VarDecl(Id(x)),VarDecl(Id(y)),FuncDecl(Id(main)[],([][]))])

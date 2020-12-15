@@ -1,18 +1,1 @@
-
-        Var: test;
-        Function: foo
-            Body:
-            While True Do
-                If test Then
-                    Return True;
-                EndIf.
-            EndWhile.
-            Return False;
-            EndBody.
-        Function: main
-            Body:
-            Var: x;
-            x = foo();
-            test = 1;
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([][CallStmt(Id(foo),[])]))])

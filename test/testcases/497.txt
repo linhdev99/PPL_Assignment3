@@ -1,10 +1,1 @@
-
-        Var: test[5];
-        Function: main
-            Parameter: x[5]
-            Body:
-            test[0] = 1;
-            main(test);
-            x[0] = 1.;
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(i))][While(BinaryOp(>,Id(i),IntLiteral(10)),[],[Assign(Id(i),BinaryOp(-,Id(i),IntLiteral(1)))])]))])

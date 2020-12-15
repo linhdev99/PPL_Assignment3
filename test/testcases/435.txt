@@ -1,15 +1,1 @@
-
-        Function: factorial
-            Parameter: n
-            Body:
-                If n == 0 Then
-                    Return 0;
-                Else
-                    Return n * factorial(n - 1);
-                EndIf.
-            EndBody.
-        Function: main
-            Body:
-                Return factorial(1);
-            EndBody.
-        
+Program([FuncDecl(Id(main)[VarDecl(Id(x))],([][]))])

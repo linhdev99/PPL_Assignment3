@@ -1,18 +1,1 @@
-
-        Var: test, x, y;
-        Function: fact
-        Parameter: n
-        Body:
-            If n == 0 Then
-                Var: x;
-                Return x + 3 + - 2 * y +1;
-            Else
-                Var: x;
-                Return 1;
-            EndIf.
-        EndBody.
-        Function: main
-            Body:
-            x = fact(1);
-            EndBody.
-        
+Program([VarDecl(Id(x),[1,2,3]),VarDecl(Id(y),[2,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2)),ArrayLiteral(IntLiteral(10),IntLiteral(20)))),FuncDecl(Id(main)[],([][]))])

@@ -1,15 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            test = True;
-            If (test) Then
-                Var: test = False;
-                If (test) Then
-                    Var: test;
-                    test = 1;
-                EndIf.
-            EndIf.
-            test =2;
-            EndBody.
-        
+Program([VarDecl(Id(x),BooleanLiteral(true)),FuncDecl(Id(main)[],([][]))])

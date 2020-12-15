@@ -1,8 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            read();
-            print(read());
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([][CallStmt(Id(printStrLn),[CallExpr(Id(read),[IntLiteral(4)])])]))])

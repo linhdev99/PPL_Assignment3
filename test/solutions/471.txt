@@ -1,1 +1,1 @@
-Undeclared Identifier: main
+No Entry Point

@@ -1,1 +1,1 @@
-Redeclared Variable: test
+Undeclared Identifier: a

@@ -1,7 +1,1 @@
-
-        Var: test[1][1]={{1}};
-        Function: main
-            Body:
-            test[0] = {1};
-            EndBody.
-        
+Program([FuncDecl(Id(foo)[],([][Assign(Id(a),IntLiteral(1))])),FuncDecl(Id(main)[],([][]))])

@@ -1,1 +1,1 @@
-Undeclared Function: print
+Type Mismatch In Statement: CallStmt(Id(printStrLn),[])

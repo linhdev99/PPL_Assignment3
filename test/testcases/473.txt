@@ -1,8 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            test = float_of_string("asda");
-            test = 1.;
-            EndBody.
-        
+Program([VarDecl(Id(x)),VarDecl(Id(y),[1]),FuncDecl(Id(main)[],([][]))])

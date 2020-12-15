@@ -1,8 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            main()[0] = 1;
-            Return {1};
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(i))][While(BinaryOp(<,Id(i),IntLiteral(10)),[VarDecl(Id(x),IntLiteral(10))],[Assign(Id(i),BinaryOp(+,Id(x),IntLiteral(1)))])]))])

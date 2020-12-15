@@ -1,7 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            printLn(test);
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(a),[4])][Assign(ArrayCell(Id(a),[IntLiteral(2)]),IntLiteral(5))]))])

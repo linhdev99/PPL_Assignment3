@@ -1,10 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            Var: x;
-            For (x = 1, 10, 2) Do
-                Var: y;
-                EndFor.
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(a),[4])][Assign(ArrayCell(Id(a),[IntLiteral(2)]),IntLiteral(5))]))])

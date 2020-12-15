@@ -1,12 +1,1 @@
-
-        Var: test[5];
-        Function: foo
-            Body:
-            Return 1;
-            EndBody.
-        Function: main
-            Body:
-            test[0] = 1.;
-            foo();
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(a),[4])][Assign(Id(a),ArrayLiteral(IntLiteral(1),IntLiteral(3),IntLiteral(5),IntLiteral(7)))]))])

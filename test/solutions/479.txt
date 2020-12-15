@@ -1,1 +1,1 @@
-Type Mismatch In Statement: CallStmt(Id(read),[Id(x)])
+Type Cannot Be Inferred: VarDecl(Id(x),[1],FloatLiteral(1.2))

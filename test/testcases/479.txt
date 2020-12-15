@@ -1,8 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            Var: x = "";
-            read(x);
-            EndBody.
-        
+Program([VarDecl(Id(x),[1],FloatLiteral(1.2)),FuncDecl(Id(main)[],([][]))])

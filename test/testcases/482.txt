@@ -1,10 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            Var: x;
-            x = 1== 1;
-            x = True;
-            Return main();
-            EndBody.
-        
+Program([VarDecl(Id(x),FloatLiteral(1000.0)),VarDecl(Id(y),[5],ArrayLiteral(IntLiteral(2),IntLiteral(4),IntLiteral(100),IntLiteral(24),IntLiteral(9))),VarDecl(Id(z),FloatLiteral(2000.0)),FuncDecl(Id(main)[],([][]))])

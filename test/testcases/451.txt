@@ -1,11 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            foo()[1] = 1;
-            EndBody.
-        Function: foo
-            Body:
-            Return {1,2};
-            EndBody.
-        
+Program([VarDecl(Id(x),IntLiteral(3)),VarDecl(Id(y),IntLiteral(3)),FuncDecl(Id(main)[],([][]))])

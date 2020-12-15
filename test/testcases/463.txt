@@ -1,12 +1,1 @@
-
-        Var: test[5];
-        Function: foo
-            Body:
-            Return 1;
-            EndBody.
-        Function: main
-            Body:
-            foo();
-            test[0] = foo();
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(a))][If(BooleanLiteral(true),[],[CallStmt(Id(main),[])])ElseIf(BooleanLiteral(false),[],[])ElseIf(BinaryOp(<,Id(a),IntLiteral(2)),[VarDecl(Id(x))],[])Else([VarDecl(Id(x),IntLiteral(3))],[Assign(Id(x),BinaryOp(+,Id(x),IntLiteral(1)))])]))])

@@ -1,1 +1,1 @@
-Type Cannot Be Inferred: Assign(Id(test),Id(test))
+Redeclared Variable: id

@@ -1,8 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            test = "";
-            test = 1 + 1;
-            EndBody.
-        
+Program([VarDecl(Id(x)),VarDecl(Id(y),[1],IntLiteral(1)),FuncDecl(Id(main)[],([][]))])

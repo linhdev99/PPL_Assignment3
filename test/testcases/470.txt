@@ -1,9 +1,1 @@
-
-        Var: test;
-        Function: main
-            Parameter: x,y,z
-            Body:
-            test = (x+y) == z;
-            x = test;
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([][CallStmt(Id(foo),[])]))])

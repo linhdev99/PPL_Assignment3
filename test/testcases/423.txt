@@ -1,9 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            For (x = 1, x<5, 2) Do
-                Var: x;
-                EndFor.
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(a))][If(BooleanLiteral(true),[],[CallStmt(Id(main),[])])ElseIf(BooleanLiteral(false),[],[])ElseIf(BinaryOp(<,Id(a),IntLiteral(2)),[VarDecl(Id(x))],[])Else([VarDecl(Id(x),IntLiteral(3))],[Assign(Id(x),BinaryOp(+,Id(x),IntLiteral(1)))])]))])

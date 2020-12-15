@@ -1,1 +1,1 @@
-Type Mismatch In Expression: BinaryOp(+,Id(y),Id(z))
+Type Mismatch In Statement: CallStmt(Id(printStrLn),[])

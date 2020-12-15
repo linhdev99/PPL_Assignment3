@@ -1,10 +1,1 @@
-
-        Var: arr[2][2] = {{1,2},{3,4}};
-        Function: test_array
-            Body:
-                arr = arr[0] * 2 - 3 + (1\2);
-            EndBody.
-        Function: main
-            Body:
-            EndBody.
-        
+Program([VarDecl(Id(x),BooleanLiteral(false)),FuncDecl(Id(main)[],([][]))])

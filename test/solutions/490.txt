@@ -1,1 +1,1 @@
-Undeclared Function: test
+Undeclared Identifier: a

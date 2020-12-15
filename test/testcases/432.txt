@@ -1,15 +1,1 @@
-
-        Var: test;
-        Function: main
-            Parameter: x
-            Body:
-            If True Then
-                Var:x;
-                x = 1;
-            ElseIf False Then
-                x = True;
-            Else
-                x = 2.1;
-            EndIf.
-            EndBody.
-        
+Program([VarDecl(Id(x)),VarDecl(Id(y),BooleanLiteral(true)),VarDecl(Id(z),[2,3],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2),IntLiteral(2)),ArrayLiteral(IntLiteral(2),IntLiteral(2),IntLiteral(10)))),FuncDecl(Id(main)[VarDecl(Id(b)),VarDecl(Id(c)),VarDecl(Id(d),[10,10])],([VarDecl(Id(a),IntLiteral(1710165)),VarDecl(Id(r),IntLiteral(3))][Assign(Id(b),BinaryOp(*,UnaryOp(-,BinaryOp(+,Id(a),Id(r))),UnaryOp(-,Id(c))))]))])

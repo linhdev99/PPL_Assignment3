@@ -254,6 +254,10 @@ Symbol("print",MType([StringType()],VoidType()))
                 return return_type
         
         if op in ['+', '-', '*', '\\']:
+            # print(left)
+            # print(right)
+            # print(param)
+            # print("===========")
             retype = check_type(IntType, IntType())
             if isinstance(typeLeft, Unknown):
                 for idx, x in enumerate(param):
@@ -291,11 +295,11 @@ Symbol("print",MType([StringType()],VoidType()))
             if isinstance(typeLeft, Unknown):
                 for idx, x in enumerate(param):
                        if left_name == x.name:
-                            param[idx].mtype = BoolType()
+                            param[idx].mtype = IntType()
             if isinstance(typeRight, Unknown):
                 for idx, x in enumerate(param):
                        if right_name == x.name:
-                            param[idx].mtype = BoolType()
+                            param[idx].mtype = IntType()
             return retypr
         if op in ['&&', '||']:
             retypr = check_type(BoolType, BoolType())
@@ -313,43 +317,43 @@ Symbol("print",MType([StringType()],VoidType()))
             if isinstance(typeLeft, Unknown):
                 for idx, x in enumerate(param):
                        if left_name == x.name:
-                            param[idx].mtype = BoolType()
+                            param[idx].mtype = FloatType()
             if isinstance(typeRight, Unknown):
                 for idx, x in enumerate(param):
                        if right_name == x.name:
-                            param[idx].mtype = BoolType()
+                            param[idx].mtype = FloatType()
             return retypr
         if op in ['==']:
-            retypr = check_type((IntType, FloatType), BoolType())
+            retypr = check_type(IntType, BoolType())
             if isinstance(typeLeft, Unknown):
                 for idx, x in enumerate(param):
                        if left_name == x.name:
-                            param[idx].mtype = BoolType()
+                            param[idx].mtype = IntType()
             if isinstance(typeRight, Unknown):
                 for idx, x in enumerate(param):
                        if right_name == x.name:
-                            param[idx].mtype = BoolType()
+                            param[idx].mtype = IntType()
             return retypr
         
     
     def visitUnaryOp(self, ast, param):
         op = ast.op
         expr = self.visit(ast.body, param)
-        if isinstance(expr, Unknown):
-            raise TypeCannotBeInferred(ast)
+        # if isinstance(expr, Unknown):
+        #     raise TypeCannotBeInferred(ast)
         if ast.op == '!':
-            if isinstance(expr, BoolType):
-                return expr
+            if isinstance(expr, (Unknown, BoolType)):
+                return BoolType()
             else:
                 raise TypeMismatchInExpression(ast)
         elif ast.op == '-':
-            if isinstance(expr, IntType):
-                return expr
+            if isinstance(expr, (Unknown, IntType)):
+                return IntType()
             else:
                 raise TypeMismatchInExpression(ast)
         elif ast.op == '-.':
-            if isinstance(expr, FloatType):
-                return expr
+            if isinstance(expr, (Unknown, FloatType)):
+                return FloatType()
             else:
                 raise TypeMismatchInExpression(ast)
     
@@ -615,7 +619,9 @@ Symbol("print",MType([StringType()],VoidType()))
                 if not isinstance(x.mtype.restype, VoidType):
                     raise TypeMismatchInStatement(ast)
                 getIntype = x.mtype.intype
+                # print(x)
         if len(ast.param) != len(getIntype):
+            # print(len(getIntype))
             raise TypeMismatchInStatement(ast)
         if ast.param != []:
             for idx, x in enumerate(ast.param):

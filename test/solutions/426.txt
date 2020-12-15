@@ -1,1 +1,1 @@
-Type Mismatch In Expression: ArrayCell(Id(test),[IntLiteral(0)])
+Type Mismatch In Statement: CallStmt(Id(printStrLn),[])

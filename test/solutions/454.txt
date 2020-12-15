@@ -1,1 +1,1 @@
-Undeclared Identifier: foo
+Redeclared Variable: id

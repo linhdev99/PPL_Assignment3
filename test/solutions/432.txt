@@ -1,1 +1,0 @@
-Type Mismatch In Statement: Assign(Id(x),FloatLiteral(2.1))

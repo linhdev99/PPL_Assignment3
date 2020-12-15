@@ -1,9 +1,1 @@
-
-        Var: test;
-        Function: float_of_int
-            Body:
-            EndBody.
-        Function: main
-            Body:
-            EndBody.
-        
+Program([VarDecl(Id(x),BooleanLiteral(false)),FuncDecl(Id(main)[],([][]))])

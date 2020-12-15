@@ -1,1 +1,1 @@
-Type Mismatch In Statement: Assign(ArrayCell(Id(test),[IntLiteral(2)]),BinaryOp(*.,FloatLiteral(5.0),FloatLiteral(3.0)))
+Type Mismatch In Expression: CallExpr(Id(read),[IntLiteral(4)])

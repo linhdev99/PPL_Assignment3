@@ -1,15 +1,1 @@
-
-        Var: test;
-        Function: foo
-            Parameter: x
-            Body:
-            x = 1.1;
-            Return {1.1};
-            EndBody.
-        Function: main
-            Parameter: x
-            Body:
-            foo(main(1))[0] = x +. 1.;
-            Return 1.1;
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(i))][Dowhile([],[Assign(Id(i),BinaryOp(*,Id(i),IntLiteral(2))),Break()],BinaryOp(<,Id(i),IntLiteral(10)))]))])

@@ -1,11 +1,1 @@
-
-        Var: test;
-        Function: foo
-            Body:
-            Return test;
-            EndBody.
-        Function: main
-            Body:
-            Return foo();
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([][CallStmt(Id(foo),[])]))])

@@ -1,6 +1,1 @@
-
-        Var: test;
-        Function: foo
-            Body:
-            EndBody.
-        
+Program([VarDecl(Id(x)),VarDecl(Id(y),BooleanLiteral(true)),VarDecl(Id(z),[2,3],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2),IntLiteral(2)),ArrayLiteral(IntLiteral(2),IntLiteral(2),IntLiteral(10)))),FuncDecl(Id(main)[VarDecl(Id(b)),VarDecl(Id(c)),VarDecl(Id(d),[10,10])],([VarDecl(Id(a),IntLiteral(1710165))][]))])

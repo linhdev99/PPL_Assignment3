@@ -1,9 +1,1 @@
-
-        Var: test;
-        Function: main
-            Parameter: x,y,z
-            Body:
-            x = 1;
-            main(1.,1,1);
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(i))][For(Id(i),IntLiteral(0),BinaryOp(<,Id(i),IntLiteral(5)),IntLiteral(1),[],[CallStmt(Id(print),[Id(i)])])]))])

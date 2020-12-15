@@ -1,8 +1,1 @@
-
-        Var: test;
-        Function: main
-            Body:
-            Var: test;
-            test = test;
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([VarDecl(Id(id),[2,3]),VarDecl(Id(id),[2,8])][]))])
