@@ -1,6 +1,1 @@
-
-        Var: test, test;
-        Function: main
-            Body:
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([][CallStmt(Id(foo),[])]))])

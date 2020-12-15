@@ -1,7 +1,1 @@
-
-        Function: main
-            Parameter: x, y ,z
-            Body:
-            y = (x>z) || x;
-            EndBody.
-        
+Program([FuncDecl(Id(main)[VarDecl(Id(x))],([][]))])

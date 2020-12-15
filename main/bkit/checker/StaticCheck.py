@@ -119,7 +119,10 @@ Symbol("print",MType([StringType()],VoidType()))
                 raise TypeMismatchInExpression(ast)
         if ast.varInit:
             if ast.varDimen != []:
-                varType = self.visit(ast.varInit, (ast.varDimen, param))
+                if isinstance(ast.varInit, ArrayLiteral):
+                    varType = self.visit(ast.varInit, (ast.varDimen, param))
+                else:
+                    raise TypeCannotBeInferred(ast)
             else:
                 varType = self.visit(ast.varInit, param)
         else:
@@ -450,8 +453,11 @@ Symbol("print",MType([StringType()],VoidType()))
         if isinstance(rhs, ArrayLiteral):
             for x in param:
                 if x.name == lhs_name:
-                    length = len(lhs.idx)
-                    dimen = x.mtype.dimen[length:]
+                    if isinstance(lhs, ArrayCell):
+                        length = len(lhs.idx)
+                        dimen = x.mtype.dimen[length:]
+                    else:
+                        dimen = x.mtype.dimen
                     break
             rhsType = self.visit(rhs, (dimen, param))
         else:
@@ -654,6 +660,8 @@ Symbol("print",MType([StringType()],VoidType()))
                 return True
             for x in arrList:
                 checkBlockLit(curDimen, x.value)
+        
+        # print(ast)
         if isinstance(param, tuple):
             dimen = param[0]
             checkBlockLit(param[0], ast.value)

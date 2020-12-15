@@ -1,10 +1,1 @@
-
-        Function: foo
-            Body:
-            EndBody.
-        Function: main
-            Parameter: x, y
-            Body:
-            x = 1 + foo();
-            EndBody.
-        
+Program([VarDecl(Id(x)),FuncDecl(Id(main)[VarDecl(Id(x)),VarDecl(Id(y),[5,2])],([][]))])

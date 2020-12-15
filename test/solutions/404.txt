@@ -1,1 +1,1 @@
-Redeclared Function: main
+Type Cannot Be Inferred: VarDecl(Id(y),[1],IntLiteral(1))

@@ -1,13 +1,1 @@
-
-        Function: main
-            Parameter: x, y ,z
-            Body:
-            x = 1;
-            foo(x);
-            y = z + foo(x);
-            EndBody.
-        Function: foo
-            Parameter: x
-            Body:
-            EndBody.
-        
+Program([VarDecl(Id(x),IntLiteral(3)),VarDecl(Id(y),IntLiteral(3)),FuncDecl(Id(main)[],([][]))])

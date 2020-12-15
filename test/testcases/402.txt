@@ -1,6 +1,1 @@
-
-        Function: main
-            Body:
-            printStrLn(read(4));
-            EndBody.
-        
+Program([VarDecl(Id(x)),VarDecl(Id(y)),FuncDecl(Id(main)[],([][]))])

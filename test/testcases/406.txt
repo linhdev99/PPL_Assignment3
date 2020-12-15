@@ -1,6 +1,1 @@
-
-        Function: main
-            Body:
-            x = 1;
-            EndBody.
-        
+Program([VarDecl(Id(x),BooleanLiteral(false)),FuncDecl(Id(main)[],([][]))])

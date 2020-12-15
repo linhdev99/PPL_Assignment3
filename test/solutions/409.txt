@@ -1,1 +1,1 @@
-Type Mismatch In Expression: BinaryOp(+,Id(z),CallExpr(Id(foo),[Id(x)]))
+Type Cannot Be Inferred: VarDecl(Id(x),[1],FloatLiteral(1.2))

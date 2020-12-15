@@ -1,10 +1,1 @@
-
-        Var: test;
-        Function: main
-            Parameter: t
-            Body:
-            Do
-                Var: t;
-                While 1 EndDo.
-            EndBody.
-        
+Program([FuncDecl(Id(foo)[],([][Assign(Id(a),IntLiteral(1))])),FuncDecl(Id(main)[],([][]))])
