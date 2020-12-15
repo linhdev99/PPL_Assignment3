@@ -1,0 +1,15 @@
+
+        Var: test;
+        Function: main
+            Parameter: x
+            Body:
+            If True Then
+                Var:x;
+                x = 1;
+            ElseIf False Then
+                x = True;
+            Else
+                x = 2.1;
+            EndIf.
+            EndBody.
+        

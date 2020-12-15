@@ -1,6 +1,9 @@
-
-        Var: test, test;
-        Function: main
-            Body:
-            EndBody.
-        
+Function: main
+                   Parameter: x[3], y
+                   Body:
+                        Var: z[2][3] = {{1,2,3},{4,5,6}};
+                        Var: main, a;
+                        x[1] = 1;
+                        a = 1;
+                   EndBody.
+                   

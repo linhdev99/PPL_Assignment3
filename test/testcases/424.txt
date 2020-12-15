@@ -1,0 +1,7 @@
+
+        Var: test = "21312";
+        Function: main
+            Body:
+            test = 1;
+            EndBody.
+        

@@ -1,0 +1,14 @@
+
+        Var: test;
+        Function: main
+            Body:
+            If (test) Then
+                Var: test;
+                If (test) Then
+                    Var: test;
+                    test = 1;
+                EndIf.
+            EndIf.
+            test =2;
+            EndBody.
+        

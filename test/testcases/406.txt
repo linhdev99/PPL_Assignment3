@@ -1,6 +1,7 @@
-
-        Function: main
-            Body:
-            x = 1;
-            EndBody.
-        
+Function: main
+                   Body:
+                        foo();
+                   EndBody.
+                   Function: test
+                   Body:
+                   EndBody.

@@ -1,0 +1,8 @@
+
+        Var: test;
+        Function: main
+            Parameter: test
+            Body:
+            Var: test;
+            EndBody.
+        

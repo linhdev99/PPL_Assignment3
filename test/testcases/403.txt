@@ -1,6 +1,1 @@
-
-        Function: main
-            Body:
-            printStrLn();
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([][CallExpr(Id(foo),[])]))])

@@ -1,0 +1,10 @@
+
+        Var: test;
+        Function: foo
+            Body:
+            EndBody.
+        Function: main
+            Body:
+            foo(1);
+            EndBody.
+        

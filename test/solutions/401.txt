@@ -1,1 +1,1 @@
-Undeclared Function: foo
+Type Mismatch In Expression: ArrayCell(Id(x),[IntLiteral(1)])

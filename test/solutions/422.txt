@@ -1,0 +1,1 @@
+Type Mismatch In Statement: For(Id(x),IntLiteral(1),IntLiteral(10),IntLiteral(2),[VarDecl(Id(y))],[])

@@ -1,6 +1,1 @@
-
-        Function: main
-            Parameter: a, a
-            Body:
-            EndBody.
-        
+Program([FuncDecl(Id(main)[],([][CallStmt(Id(printStrLn),[])]))])

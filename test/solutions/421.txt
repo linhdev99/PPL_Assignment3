@@ -1,1 +1,1 @@
-Type Mismatch In Statement: For(Id(x),IntLiteral(1),BinaryOp(<,Id(x),IntLiteral(10)),IntLiteral(2),[VarDecl(Id(y))],[])
+Type Mismatch In Statement: Assign(Id(x),FloatLiteral(1.1))

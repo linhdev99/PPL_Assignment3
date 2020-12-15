@@ -1,0 +1,9 @@
+
+        Function: main **main:: unknown -> unknown **
+        Parameter: x
+        Body:
+           Var: y = 1; **infer y:: int**
+           main(y); ** main:: int -> void => infer x:: int?**
+           x = 1.0; ** Error?**
+        EndBody.
+        

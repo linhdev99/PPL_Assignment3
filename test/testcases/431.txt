@@ -1,0 +1,6 @@
+
+        Var: test;
+        Function: foo
+            Body:
+            EndBody.
+        

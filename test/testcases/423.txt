@@ -2,10 +2,8 @@
         Var: test;
         Function: main
             Body:
-            Var: x;
-            For (x = 1, x < 10, 2) Do
-                Var: y;
+            For (x = 1, x<5, 2) Do
+                Var: x;
                 EndFor.
-            x = 1.1;
             EndBody.
         
