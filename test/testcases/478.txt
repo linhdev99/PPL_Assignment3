@@ -3,7 +3,7 @@
         Function: main
             Body:
             Var: x = "";
-            print(x);
+            printStr(x);
             x = 1;
             printStrLn(x);
             EndBody.

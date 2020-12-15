@@ -1,7 +1,7 @@
 
-        Var: test[5][5];
+        Var: test[5][3];
         Function: main
             Body:
-            test[1] = {1};
+            test[1] = {1,2,3};
             EndBody.
         

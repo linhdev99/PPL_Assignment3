@@ -1,1 +1,1 @@
-Type Mismatch In Statement: Assign(Id(arr),BinaryOp(+,BinaryOp(-,BinaryOp(*,ArrayCell(Id(arr),[IntLiteral(0)]),IntLiteral(2)),IntLiteral(3)),BinaryOp(\,IntLiteral(1),IntLiteral(2))))
+Type Mismatch In Expression: BinaryOp(*,ArrayCell(Id(arr),[IntLiteral(0)]),IntLiteral(2))

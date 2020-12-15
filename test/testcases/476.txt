@@ -1,6 +1,6 @@
 
         Var: test;
-        Function: float_to_int
+        Function: float_of_int
             Body:
             EndBody.
         Function: main

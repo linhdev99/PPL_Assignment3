@@ -60,7 +60,9 @@ Symbol("string_of_bool",MType([BoolType()],StringType())),
 Symbol("read",MType([],StringType())),
 Symbol("printLn",MType([],VoidType())),
 Symbol("printStr",MType([StringType()],VoidType())),
-Symbol("printStrLn",MType([StringType()],VoidType()))]                           
+Symbol("printStrLn",MType([StringType()],VoidType())),
+Symbol("print",MType([StringType()],VoidType()))
+]                           
    
     def check(self):
         return self.visit(self.ast, self.global_envi)
@@ -237,7 +239,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             # if isinstance(typeLeft, VoidType) or isinstance(typeRight, VoidType):
             #     raise TypeMismatchInExpression(ast)
             if isinstance(typeLeft, Unknown) and isinstance(typeRight, Unknown):
-                raise TypeMismatchInExpression(ast) # k biet Stmt hay expr
+                return return_type
+                # raise TypeMismatchInExpression(ast) # k biet Stmt hay expr
             if isinstance(typeLeft, Unknown) and isinstance(typeRight, accept_type):
                 return return_type
             if isinstance(typeRight, Unknown) and isinstance(typeLeft, accept_type):
@@ -253,7 +256,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 for idx, x in enumerate(param):
                        if left_name == x.name:
                             param[idx].mtype = IntType()
-            elif isinstance(typeRight, Unknown):
+            if isinstance(typeRight, Unknown):
                 for idx, x in enumerate(param):
                        if right_name == x.name:
                             param[idx].mtype = IntType()
@@ -264,7 +267,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 for idx, x in enumerate(param):
                        if left_name == x.name:
                             param[idx].mtype = FloatType()
-            elif isinstance(typeRight, Unknown):
+            if isinstance(typeRight, Unknown):
                 for idx, x in enumerate(param):
                        if right_name == x.name:
                             param[idx].mtype = FloatType()
@@ -275,7 +278,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 for idx, x in enumerate(param):
                        if left_name == x.name:
                             param[idx].mtype = IntType()
-            elif isinstance(typeRight, Unknown):
+            if isinstance(typeRight, Unknown):
                 for idx, x in enumerate(param):
                        if right_name == x.name:
                             param[idx].mtype = IntType()
@@ -286,7 +289,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 for idx, x in enumerate(param):
                        if left_name == x.name:
                             param[idx].mtype = BoolType()
-            elif isinstance(typeRight, Unknown):
+            if isinstance(typeRight, Unknown):
                 for idx, x in enumerate(param):
                        if right_name == x.name:
                             param[idx].mtype = BoolType()
@@ -297,7 +300,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 for idx, x in enumerate(param):
                        if left_name == x.name:
                             param[idx].mtype = BoolType()
-            elif isinstance(typeRight, Unknown):
+            if isinstance(typeRight, Unknown):
                 for idx, x in enumerate(param):
                        if right_name == x.name:
                             param[idx].mtype = BoolType()
@@ -308,7 +311,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 for idx, x in enumerate(param):
                        if left_name == x.name:
                             param[idx].mtype = BoolType()
-            elif isinstance(typeRight, Unknown):
+            if isinstance(typeRight, Unknown):
                 for idx, x in enumerate(param):
                        if right_name == x.name:
                             param[idx].mtype = BoolType()
@@ -319,7 +322,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 for idx, x in enumerate(param):
                        if left_name == x.name:
                             param[idx].mtype = BoolType()
-            elif isinstance(typeRight, Unknown):
+            if isinstance(typeRight, Unknown):
                 for idx, x in enumerate(param):
                        if right_name == x.name:
                             param[idx].mtype = BoolType()
@@ -415,7 +418,10 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         for x in param:
             if x.name == ast.arr.name:
                 if isinstance(x.mtype, ArrayType):
-                    check_type = x.mtype.eletype
+                    if len(ast.idx) == len(x.mtype.dimen):
+                        check_type = x.mtype.eletype
+                    else:
+                        check_type = ArrayType(x.mtype.dimen[:-1], x.mtype.eletype)
                 else:
                     check_type = x.mtype
                 break
@@ -442,6 +448,11 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             lhsType = self.visit(lhs, param)
             lhs_name = lhs.arr.name
         if isinstance(rhs, ArrayLiteral):
+            for x in param:
+                if x.name == lhs_name:
+                    length = len(lhs.idx)
+                    dimen = x.mtype.dimen[length:]
+                    break
             rhsType = self.visit(rhs, (dimen, param))
         else:
             rhsType = self.visit(rhs, param)
@@ -452,14 +463,20 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         elif isinstance(rhsType, TypeCannotBeInferred):
             raise TypeCannotBeInferred(ast)
         elif isinstance(lhsType, Unknown) and isinstance(rhsType, Unknown):
-            raise TypeMismatchInExpression(rhs)
+            # raise TypeMismatchInExpression(rhs)
+            raise TypeCannotBeInferred(ast)
         elif isinstance(lhsType, Unknown) and not isinstance(rhsType, Unknown):
+            # print("=========")
+            # print(ast)
             # print(rhsType)
-            # if isinstance(rhsType, ArrayType):
-            #     print(rhsType)
             for idx, x in enumerate(param):
+                # print(x.mtype)
                 if lhs_name == x.name and isinstance(x.mtype, Unknown):
                     x.mtype = rhsType
+                    # print(x)
+                    break
+                elif lhs_name == x.name and isinstance(x.mtype, ArrayType):
+                    x.mtype.eletype = rhsType
                     break
         elif not isinstance(lhsType, Unknown) and isinstance(rhsType, Unknown):
             for idx, x in enumerate(param):
@@ -628,6 +645,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             # print(dimen[0])
             # print(arrList)
             # print("********")
+            if dimen == []:
+                return True
             if dimen[0] != len(arrList):
                 raise TypeCannotBeInferred(ast)
             curDimen = dimen[1:]

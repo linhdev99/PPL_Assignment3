@@ -1,1 +1,1 @@
-Undeclared Function: print
+Type Cannot Be Inferred: CallStmt(Id(print),[Id(test)])

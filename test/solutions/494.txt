@@ -1,1 +1,1 @@
-Undeclared Function: print
+Type Mismatch In Expression: BinaryOp(+.,Id(test),ArrayLiteral(IntLiteral(1),IntLiteral(1)))
