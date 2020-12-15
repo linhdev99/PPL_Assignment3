@@ -16,7 +16,7 @@ class CheckSuite(unittest.TestCase):
     def test_1(self):
         """Simple program: main"""
         input = """
-        Var: x;
+Var: x;
 Function: main
 Body:
     Var: x;
@@ -44,9 +44,19 @@ Body:
         x = "String";
     Else
         Var: f = 1;
-        For (f = 1, f < 10, 1) Do
+        For (f = 1, f < 1, 1) Do
             Var: x[3];
             x = {1,2,3}; 
+            While x[1] < 1 Do
+                Var: f, b = 10, a[3] = {1.4, 1.2, 1.0};
+                Var: e = True;
+                f = b + int_of_float(1.5);
+                a[0] = 2.0 *. float_of_int(f);
+                foo(float_of_int(x[2]), f);
+                Do
+                    Var: a = 5;
+                While (x[2] > 10) || (False && e) EndDo.
+            EndWhile.
         EndFor.
     EndIf.
     a = 2;

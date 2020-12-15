@@ -335,6 +335,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             if ast.method.name == x.name:
                 length = len(x.mtype.intype);
                 check_type = x.mtype.restype
+                break
         if length != len(ast.param):
             raise TypeMismatchInExpression(ast)
         return check_type
@@ -365,6 +366,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                     check_type = x.mtype.restype.eletype
                 else:
                     check_type = x.mtype.restype
+                break
         return check_type
         
     
@@ -428,6 +430,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             vardecl = x[1]
             stmt = x[2]
             typeExpr = self.visit(expr, param)
+            if not isinstance(typeExpr, BoolType):
+                raise TypeMismatchInStatement(ast)
             for y in vardecl:
                 temp = self.visit(y, local_var)
                 local_var.append(temp)
@@ -440,19 +444,27 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         for x in elseStmt[1]:
             self.visit(x, local_var + param) 
             
-        for y in (local_var + param):
-            print(y)         
+        # for y in (local_var + param):
+        #     print(y)         
     
     def visitFor(self, ast, param):
         local_var = []
         typeIdx = self.visit(ast.idx1, param)
-        print(typeIdx)
-        if not isinstance(typeIdx, (IntType, Unknown)):
-            raise TypeMismatchInStatement(ast)
         exp1 = self.visit(ast.expr1, param)
         exp2 = self.visit(ast.expr2, param)
         exp3 = self.visit(ast.expr3, param)
-        print(exp1)
+        
+        # check type
+        if not isinstance(typeIdx, IntType):
+            raise TypeMismatchInStatement(ast)
+        if not isinstance(exp1, IntType):
+            raise TypeMismatchInStatement(ast)
+        if not isinstance(exp3, IntType):
+            raise TypeMismatchInStatement(ast)
+        if not isinstance(exp2, BoolType):
+            raise TypeMismatchInStatement(ast)
+        
+        # visit loop[0]: var, loop[1]: func
         for x in ast.loop[0]:
             temp = self.visit(x, local_var)
             local_var.append(temp)
@@ -469,10 +481,26 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         print(param)
     
     def visitDowhile(self, ast, param):
-        return None
+        typeExpr = self.visit(ast.exp, param)
+        local_var = []
+        if not isinstance(typeExpr, BoolType):
+            raise TypeMismatchInStatement(ast)
+        for x in ast.sl[0]:
+            temp = self.visit(x, local_var)
+            local_var.append(temp)
+        for x in ast.sl[1]:
+            self.visit(x, local_var + param)
 
     def visitWhile(self, ast, param):
-        return None
+        typeExpr = self.visit(ast.exp, param)
+        local_var = []
+        if not isinstance(typeExpr, BoolType):
+            raise TypeMismatchInStatement(ast)
+        for x in ast.sl[0]:
+            temp = self.visit(x, local_var)
+            local_var.append(temp)
+        for x in ast.sl[1]:
+            self.visit(x, local_var + param)
 
     def visitCallStmt(self, ast, param):
         check_id = self.visit(ast.method, param)
