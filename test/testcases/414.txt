@@ -1,6 +1,7 @@
 
         Function: main
+            Parameter: x, y ,z
             Body:
-            foo();
+            y = x || (x>z);
             EndBody.
         

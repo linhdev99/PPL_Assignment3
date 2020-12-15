@@ -1,3 +1,6 @@
-Function: test
-                   Body:
-                   EndBody.
+
+        Var: test, test;
+        Function: main
+            Body:
+            EndBody.
+        

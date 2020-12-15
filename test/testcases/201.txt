@@ -1,5 +1,0 @@
-Function: main
-        Body:
-            Var: x[3][3];
-            x[3][3] = {1,2,3};
-        EndBody.

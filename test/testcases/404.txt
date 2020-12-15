@@ -1,6 +1,8 @@
 
         Function: main
             Body:
-            foo();
+            EndBody.
+        Function: main
+            Body:
             EndBody.
         

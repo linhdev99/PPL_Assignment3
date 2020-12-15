@@ -1,0 +1,11 @@
+
+        Var: test;
+        Function: main
+            Parameter: t
+            Body:
+            t = 1 < 2;
+            While t Do ** neu While t thi sao? **
+                Var: t;
+                EndWhile.
+            EndBody.
+        

@@ -1,6 +1,6 @@
 
         Function: main
+            Parameter: a, a
             Body:
-            foo();
             EndBody.
         

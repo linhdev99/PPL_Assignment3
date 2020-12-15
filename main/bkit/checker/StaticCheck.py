@@ -80,7 +80,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         #Check redeclare
         for x in ast.decl:
             if isinstance(x, VarDecl):
-                param.append(self.visit(x, param))
+                temp = self.visit(x, param)
+                param.append(temp)
             elif isinstance(x, FuncDecl):
                 lstParameter = []
                 for y in x.param:
@@ -104,7 +105,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         #     print(x)
         # print("===========================")
         
-    def visitVarDecl(self, ast, param):    
+    def visitVarDecl(self, ast, param): 
         for x in param:
             if ast.variable.name == x.name:
                 raise Redeclared(Variable(), ast.variable.name)
@@ -130,8 +131,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         is_return = False
         return_type = VoidType()
         nameFunc = ast.name.name;
-        # kiem tra tung phan tu trong parameter cua function
-        for idx,x in enumerate(ast.param):
+        for idx, x in enumerate(ast.param):
+            # kiem tra tung phan tu trong parameter cua function
             if x.variable.name in para_dict:
                 raise Redeclared(Parameter(), x.variable.name)
             else:
@@ -200,6 +201,11 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             left_name = left.name
         elif isinstance(typeLeft, CallExpr):
             left_name = left.method.name
+        elif isinstance(typeLeft, TypeCannotBeInferred):
+            return TypeCannotBeInferred(ast)
+        elif isinstance(typeLeft, VoidType):
+            #return typeLeft
+            raise TypeMismatchInExpression(ast)
             
         if isinstance(right, ArrayCell):
             right_name = right.arr.name 
@@ -207,18 +213,23 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             right_name = right.name
         elif isinstance(typeRight, CallExpr):
             right_name = right.method.name
+        elif isinstance(typeRight, TypeCannotBeInferred):
+            return TypeCannotBeInferred(ast)
+        elif isinstance(typeRight, VoidType):
+            # return typeRight
+            raise TypeMismatchInExpression(ast)
         
         def check_type(accept_type, return_type=None):
             # if isinstance(typeLeft, VoidType) or isinstance(typeRight, VoidType):
             #     raise TypeMismatchInExpression(ast)
             if isinstance(typeLeft, Unknown) and isinstance(typeRight, Unknown):
-                raise TypeCannotBeInferred(ast)
+                raise TypeMismatchInExpression(ast) # k biet Stmt hay expr
             if isinstance(typeLeft, Unknown) and isinstance(typeRight, accept_type):
                 return return_type
             if isinstance(typeRight, Unknown) and isinstance(typeLeft, accept_type):
                 return return_type
             if not isinstance(typeLeft, accept_type) or not isinstance(typeRight, accept_type):
-                raise TypeMismatchInExpression(ast)
+                return TypeMismatchInExpression(ast)
             if return_type:
                 return return_type
         
@@ -323,16 +334,17 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 raise TypeMismatchInExpression(ast)
     
     def visitCallExpr(self, ast, param):
-        check_id = self.visit(ast.method, param)
+        check_id = self.visit(ast.method, (Function(), param))
         check_type = None
         length = 0
         if ast.param != []:
             for x in ast.param:
                 check_exp = self.visit(x, param)
                 if isinstance(check_exp, Unknown):
-                    raise TypeCannotBeInferred(ast)
+                    return TypeCannotBeInferred(ast) # fix success
         for x in param:
             if ast.method.name == x.name:
+                print(x)
                 length = len(x.mtype.intype);
                 check_type = x.mtype.restype
                 break
@@ -343,12 +355,16 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     
     def visitId(self, ast, param):
         is_declare = False
+        kind = Identifier()
+        if isinstance(param, tuple):
+            kind = param[0]
+            param = param[1]
         for x in param:
             if ast.name == x.name:
                 is_declare = True;
                 break
         if not is_declare:
-            raise Undeclared(Identifier(), ast.name)
+            raise Undeclared(kind, ast.name)
         for x in param:
             if ast.name == x.name:
                 return x.mtype.restype
@@ -395,6 +411,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             rhsType = self.visit(rhs, param)
         # visit  
         if isinstance(rhsType, VoidType):
+            raise TypeCannotBeInferred(ast)
+        elif isinstance(rhsType, TypeCannotBeInferred):
             raise TypeCannotBeInferred(ast)
         elif isinstance(lhsType, Unknown) and not isinstance(rhsType, Unknown):
             for idx, x in enumerate(param):
@@ -478,7 +496,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return None
     
     def visitReturn(self, ast, param):
-        print(param)
+        return None
+        #print(param)
     
     def visitDowhile(self, ast, param):
         typeExpr = self.visit(ast.exp, param)
@@ -503,7 +522,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             self.visit(x, local_var + param)
 
     def visitCallStmt(self, ast, param):
-        check_id = self.visit(ast.method, param)
+        check_id = self.visit(ast.method, (Function(), param))
         getIntype = []
         newParamFunc = []
         for x in param:
